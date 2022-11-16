@@ -1,0 +1,84 @@
+{
+  "name": "one-sync-front",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "craco build ",
+    "eject": "craco eject",
+    "lint": "eslint -c ./.eslintrc.js --ext .ts,.tsx,.js,.jsx --quiet",
+    "lint:fix": "eslint -c ./.eslintrc.js --ext .ts,.tsx,.js,.jsx ./src --fix",
+    "precommit": "lint-staged",
+    "start": "craco start",
+    "test": "craco test"
+  },
+  "dependencies": {
+    "antd": "^4.18.3",
+    "autoprefixer": "^9.0.0",
+    "axios": "^0.21.1",
+    "classnames": "^2.3.1",
+    "i18next": "^21.6.6",
+    "i18next-browser-languagedetector": "^6.1.2",
+    "i18next-intervalplural-postprocessor": "^3.0.0",
+    "image-clipper": "^0.4.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-i18next": "^11.15.3",
+    "react-loadable": "^5.5.0",
+    "react-modal": "^3.14.3",
+    "react-query": "^3.34.8",
+    "react-router-dom": "^5.2.0",
+    "react-use": "^17.2.4",
+    "umi-request": "^1.4.0"
+  },
+  "devDependencies": {
+    "@craco/craco": "^6.1.2",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/node": "^12.0.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-modal": "^3.12.1",
+    "@types/react-router-dom": "^5.1.7",
+    "@white-matrix/eslint-config": "^1.0.9",
+    "@white-matrix/prettier-config": "^1.0.9",
+    "craco-less": "^1.17.1",
+    "husky": "^6.0.0",
+    "less": "^4.1.1",
+    "less-loader": "7.3.0",
+    "lint-staged": "11.1.2",
+    "postcss": "^8.3.6",
+    "postcss-preset-env": "^6.7.0",
+    "react-scripts": "4.0.3",
+    "typescript": "^4.1.2",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "web-vitals": "^1.0.1"
+  },
+  "browserslist": {
+    "production": [
+      "> 0.2%",
+      "not dead",
+      "not op_mini all",
+      "last 3 versions",
+      "Firefox >= 20",
+      "iOS >=7"
+    ],
+    "development": [
+      "> 0.2%",
+      "last 3 versions",
+      "Firefox >= 20",
+      "iOS >=7"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx,js}": [
+      "npm run lint"
+    ]
+  }
+}
