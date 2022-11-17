@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import intervalPlural from 'i18next-intervalplural-postprocessor';
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import {
   I18nextProvider as Provider,
   initReactI18next,
@@ -33,7 +33,11 @@ export const switchLanguage = (lan: 'en-US' | 'zh') => {
 };
 export const t = i18next.t.bind(i18next);
 
-export const I18nextProvider: FC = (props) => {
+interface I18nextProviderProps {
+  children: ReactNode;
+}
+
+export const I18nextProvider: FC<I18nextProviderProps> = (props) => {
   const update = useUpdate();
   useMount(() => {
     i18next.on('languageChanged', () => {

@@ -1,20 +1,21 @@
-import './index.less';
+import './index.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import App from './App';
-import { ContextProvider } from './store/contextProvider';
 
 const queryClient = new QueryClient();
 ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ContextProvider>
+      <Router>
         <App />
-      </ContextProvider>
+      </Router>
+
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>,

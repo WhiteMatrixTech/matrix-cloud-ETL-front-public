@@ -1,20 +1,23 @@
 {
   "cSpell.words": [
-    "Craco",
-    "Plex",
-    "ROADMAP",
-    "Swei",
-    "Swiper",
     "autoprefix",
     "baseui",
     "blindbox",
     "classname",
+    "Craco",
     "ethersproject",
+    "EZEK",
     "immer",
+    "intervalplural",
+    "languagedetector",
     "opentype",
     "Plex",
+    "postprocessor",
+    "ROADMAP",
+    "Swei",
+    "Swiper",
     "truetype",
-    "EZEK"
+    "uglifyjs"
   ],
   "prettier.configPath": ".prettierrc.js",
   "editor.codeActionsOnSave": {

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 
 interface IContextInfo {
   id: string;
@@ -16,7 +16,11 @@ export const ContextInfo = React.createContext<IContextInfo>({
   }
 });
 
-export const ContextProvider: FC = (props) => {
+interface ProvidersProps {
+  children: ReactNode;
+}
+
+export const ContextProvider: FC<ProvidersProps> = ({ children }) => {
   const id = '10';
   const name = 'zhangsan';
   const number = 2;
@@ -25,7 +29,7 @@ export const ContextProvider: FC = (props) => {
   };
   return (
     <ContextInfo.Provider value={{ id, name, number, toggleTheme }}>
-      {props.children}
+      {children}
     </ContextInfo.Provider>
   );
 };

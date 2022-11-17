@@ -1,10 +1,9 @@
+import cn from 'classnames';
 import React from 'react';
-
-import styles from './Header.module.less';
 
 export function Header() {
   return (
-    <div className={styles.header}>
+    <div className={cn('h-[full] w-[full] bg-[yellow]')}>
       <div>1111</div>
     </div>
   );
