@@ -8,6 +8,7 @@
     "lint": "eslint -c ./.eslintrc.js --ext .ts,.tsx,.js,.jsx --quiet",
     "lint:fix": "eslint -c ./.eslintrc.js --ext .ts,.tsx,.js,.jsx ./src --fix",
     "pre-commit": "lint-staged",
+    "prepare": "husky install",
     "start": "craco start",
     "test": "craco test"
   },
