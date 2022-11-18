@@ -1,6 +1,10 @@
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
+    fontFamily: {
+      Sans: ['IBM Plex Sans'],
+      Roboto: ['Roboto']
+    },
     textColor: {
       common: '#312866',
       disabled: '#929292'

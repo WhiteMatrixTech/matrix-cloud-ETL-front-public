@@ -1,4 +1,4 @@
-import { getData } from '../utils/request';
+import { getData } from './request';
 
 interface WeatherRes {
   cityid: string;
@@ -10,7 +10,7 @@ interface WeatherRes {
 }
 
 export const getWeather = () => {
-  return getData<WeatherRes>(
+  return getData<null, WeatherRes>(
     'https://www.tianqiapi.com/api?version=v9&appid=23035354&appsecret=8YvlPNrz'
   );
 };

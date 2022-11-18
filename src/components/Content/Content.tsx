@@ -1,8 +1,8 @@
-import { useQuery } from 'react-query';
 import cn from 'classnames';
+import { useQuery } from 'react-query';
 
-import styles from './Content.module.less';
 import { getWeather } from '../../service/weather';
+import styles from './Content.module.less';
 
 interface ContentProps {
   className?: string;

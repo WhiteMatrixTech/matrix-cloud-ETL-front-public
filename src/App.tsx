@@ -4,7 +4,10 @@ import { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import { Layout } from './components/AppLayout';
-import About from './page/about';
+import AdapterServices from './page/adapterServices';
+import DataStore from './page/dataStore';
+import DownstreamApps from './page/downstreamApps';
+import EventHandlers from './page/eventHandlers';
 
 function App() {
   const { pathname } = useLocation();
@@ -16,8 +19,14 @@ function App() {
   return (
     <Layout>
       <Routes>
-        <Route path="/" element={<Navigate to="/about" replace={true} />} />
-        <Route path="/about" element={<About />} />
+        <Route
+          path="/"
+          element={<Navigate to="/adapter-services" replace={true} />}
+        />
+        <Route path="/adapter-services" element={<AdapterServices />} />
+        <Route path="/event-handlers" element={<EventHandlers />} />
+        <Route path="/downstream-apps" element={<DownstreamApps />} />
+        <Route path="/data-store" element={<DataStore />} />
       </Routes>
     </Layout>
   );
