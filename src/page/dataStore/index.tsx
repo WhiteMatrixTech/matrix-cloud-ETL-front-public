@@ -1,5 +1,9 @@
 import cn from 'classnames';
-import React from 'react';
+import React, { useState } from 'react';
+
+import { Analytics } from '@/components/Analytics';
+import { BlockchainExplorer } from '@/components/BlockchainExplorer';
+import { TokenDataExplorer } from '@/components/TokenDataExplorer';
 
 interface dataStoreProps {
   className?: string;
@@ -8,7 +12,47 @@ interface dataStoreProps {
 function DataStore(props: dataStoreProps) {
   const { className } = props;
 
-  return <div className={cn(className)}>dataStore</div>;
+  const [dataStoreTab, setDataStoreTab] = useState<
+    'Analytics' | 'Blockchain' | 'TokenData'
+  >('Analytics');
+
+  return (
+    <div className={cn(className, 'mt-6')}>
+      <div className="font-Sans text-[24px] font-[500] capitalize text-[#A0A0A0]">
+        <span
+          className={cn(
+            'cursor-pointer',
+            dataStoreTab === 'Analytics' && 'text-[#2483FF]'
+          )}
+          onClick={() => setDataStoreTab('Analytics')}
+        >
+          Analytics
+        </span>
+        <span
+          className={cn(
+            'ml-12 cursor-pointer',
+            dataStoreTab === 'Blockchain' && 'text-[#2483FF]'
+          )}
+          onClick={() => setDataStoreTab('Blockchain')}
+        >
+          Blockchain Explorer
+        </span>
+        <span
+          className={cn(
+            'ml-12 cursor-pointer',
+            dataStoreTab === 'TokenData' && 'text-[#2483FF]'
+          )}
+          onClick={() => setDataStoreTab('TokenData')}
+        >
+          Token Data Explorer
+        </span>
+      </div>
+
+      {dataStoreTab === 'Analytics' && <Analytics />}
+      {dataStoreTab === 'Blockchain' && <BlockchainExplorer />}
+      {dataStoreTab === 'TokenData' && <TokenDataExplorer />}
+    </div>
+  );
 }
 
 export default DataStore;
