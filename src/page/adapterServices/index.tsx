@@ -1,8 +1,9 @@
 import { Spin } from 'antd';
-import Table, { ColumnsType } from 'antd/lib/table';
+import Table, { ColumnsType, TableProps } from 'antd/lib/table';
+import { FilterValue } from 'antd/lib/table/interface';
 import cn from 'classnames';
 import dayjs from 'dayjs';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAsyncFn } from 'react-use';
 
 import { getTaskData } from '@/service/services';
@@ -21,13 +22,32 @@ interface columnsType {
 
 function AdapterServices(props: adapterServicesProps) {
   const { className } = props;
+  const [filteredInfo, setFilteredInfo] = useState<
+    Record<string, FilterValue | null>
+  >({});
+
+  const handleChange: TableProps<columnsType>['onChange'] = (
+    _pagination,
+    filters
+  ) => {
+    setFilteredInfo(filters);
+  };
 
   const columns: ColumnsType<columnsType> = [
     {
       title: 'Blockchain',
       dataIndex: 'blockchain',
       ellipsis: true,
-      className: 'text-[#000000] font-[700] text-base'
+      filters: [
+        { text: 'Flow', value: 'flow' },
+        { text: 'ETH', value: 'eth' },
+        { text: 'BTC', value: 'BTC' }
+      ],
+      filteredValue: filteredInfo.blockchain || null,
+      onFilter: (value, record) => {
+        return record.blockchain === value;
+      },
+      className: 'text-[#000000] font-[700] text-base capitalize'
     },
     {
       title: 'Task Name',
@@ -48,7 +68,9 @@ function AdapterServices(props: adapterServicesProps) {
       className: 'text-[#000000d9] text-base',
       render: (_, data) => {
         return (
-          <div>{dayjs(data.createTime).format('YYYY-MM-DD hh:mm:ss')}</div>
+          <div className="">
+            {dayjs(data.createTime).format('YYYY-MM-DD hh:mm:ss')}
+          </div>
         );
       }
     },
@@ -163,6 +185,7 @@ function AdapterServices(props: adapterServicesProps) {
             dataSource={adaptServicesData}
             loading={getAdaptServicesLoading}
             pagination={false}
+            onChange={handleChange}
           />
         </div>
       </Spin>

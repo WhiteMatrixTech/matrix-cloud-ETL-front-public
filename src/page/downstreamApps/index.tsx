@@ -1,7 +1,8 @@
 import { Spin, Table } from 'antd';
-import { ColumnsType } from 'antd/lib/table';
+import { ColumnsType, TableProps } from 'antd/lib/table';
+import { FilterValue } from 'antd/lib/table/interface';
 import cn from 'classnames';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAsyncFn } from 'react-use';
 
 import { getAppsData } from '@/service/services';
@@ -18,13 +19,32 @@ interface columnsType {
 
 function DownstreamApps(props: downstreamAppsProps) {
   const { className } = props;
+  const [filteredInfo, setFilteredInfo] = useState<
+    Record<string, FilterValue | null>
+  >({});
+
+  const handleChange: TableProps<columnsType>['onChange'] = (
+    _pagination,
+    filters
+  ) => {
+    setFilteredInfo(filters);
+  };
 
   const columns: ColumnsType<columnsType> = [
     {
       title: 'Blockchain',
       dataIndex: 'blockchain',
       ellipsis: true,
-      className: 'text-[#000000] font-[700] text-base'
+      filters: [
+        { text: 'Flow', value: 'flow' },
+        { text: 'ETH', value: 'eth' },
+        { text: 'BTC', value: 'BTC' }
+      ],
+      filteredValue: filteredInfo.blockchain || null,
+      onFilter: (value, record) => {
+        return record.blockchain === value;
+      },
+      className: 'text-[#000000] font-[700] text-base capitalize'
     },
     {
       title: 'App Name',
@@ -126,6 +146,7 @@ function DownstreamApps(props: downstreamAppsProps) {
             dataSource={downstreamAppsData}
             loading={getDownstreamAppsLoading}
             pagination={false}
+            onChange={handleChange}
           />
         </div>
       </Spin>
