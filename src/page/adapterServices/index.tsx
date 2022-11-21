@@ -40,8 +40,8 @@ function AdapterServices(props: adapterServicesProps) {
       ellipsis: true,
       filters: [
         { text: 'Flow', value: 'flow' },
-        { text: 'ETH', value: 'eth' },
-        { text: 'BTC', value: 'BTC' }
+        { text: 'Ethereum', value: 'ethereum' },
+        { text: 'BTC', value: 'btc' }
       ],
       filteredValue: filteredInfo.blockchain || null,
       onFilter: (value, record) => {
