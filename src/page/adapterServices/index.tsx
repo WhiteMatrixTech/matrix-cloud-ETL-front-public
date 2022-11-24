@@ -40,8 +40,7 @@ function AdapterServices(props: adapterServicesProps) {
       ellipsis: true,
       filters: [
         { text: 'Flow', value: 'flow' },
-        { text: 'Ethereum', value: 'ethereum' },
-        { text: 'BTC', value: 'btc' }
+        { text: 'Ethereum', value: 'ethereum' }
       ],
       filteredValue: filteredInfo.blockchain || null,
       onFilter: (value, record) => {
@@ -53,7 +52,7 @@ function AdapterServices(props: adapterServicesProps) {
       title: 'Task Name',
       dataIndex: 'taskName',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base w-[40%]'
     },
     {
       title: 'TaskId',

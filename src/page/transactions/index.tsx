@@ -2,6 +2,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Select, Spin } from 'antd';
 import Table, { ColumnsType } from 'antd/lib/table';
 import cn from 'classnames';
+import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAsyncFn } from 'react-use';
@@ -31,7 +32,7 @@ function Transactions(props: transactionProps) {
       title: 'Txn Hash',
       dataIndex: 'transactionHash',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base w-[20%]'
     },
     {
       title: 'Block Number',
@@ -43,20 +44,33 @@ function Transactions(props: transactionProps) {
       title: 'Timestamp',
       dataIndex: 'timestamp',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base',
+      render: (_, data) => {
+        return (
+          <div className="">
+            {dayjs(data.timestamp).format('YYYY-MM-DD hh:mm:ss')}
+          </div>
+        );
+      }
     },
     {
       title: 'From',
       dataIndex: 'from',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base w-[20%]',
+      render: (_, data) => {
+        if (data.from) {
+          return <div>{data.from}</div>;
+        }
+        return <div>null</div>;
+      }
     },
 
     {
       title: 'To',
       dataIndex: 'to',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base w-[20%]'
     },
     {
       title: `Value (${selectedChain === 'flow' ? 'flow' : 'eth'})`,
@@ -64,7 +78,7 @@ function Transactions(props: transactionProps) {
       className: 'text-[#000000d9] text-base',
       render: (_, data) => {
         if (selectedChain === 'flow') {
-          return <div>{data.value}</div>;
+          return <div>{data.value || 'null'}</div>;
         }
         return <div>{data.value / 1e18}</div>;
       }
@@ -94,7 +108,7 @@ function Transactions(props: transactionProps) {
   return (
     <div className={cn(className)}>
       <div className="px-10 py-3 text-[24px] font-[600] capitalize text-[#2483FF]">
-        <Link to="/data-store">Blockchain Explorer</Link>
+        <Link to="/data-store?params=blockchain">Blockchain Explorer</Link>
         <span className="mx-4">{'>'}</span>
         <span className="text-[#292B2E]">transactions</span>
       </div>
@@ -127,6 +141,14 @@ function Transactions(props: transactionProps) {
             {
               value: 'flow',
               label: 'Flow'
+            },
+            {
+              value: 'bsc',
+              label: 'BSC'
+            },
+            {
+              value: 'btc',
+              label: 'BTC'
             }
           ]}
           onChange={(value: string) => setSelectedChain(value)}

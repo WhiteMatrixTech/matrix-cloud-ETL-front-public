@@ -2,6 +2,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Select, Spin, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import cn from 'classnames';
+import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAsyncFn } from 'react-use';
@@ -42,7 +43,14 @@ function Blocks(props: blockProps) {
       title: 'Timestamp',
       dataIndex: 'timestamp',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base',
+      render: (_, data) => {
+        return (
+          <div className="">
+            {dayjs(data.timestamp).format('YYYY-MM-DD hh:mm:ss')}
+          </div>
+        );
+      }
     },
     {
       title: 'Gas Used',
@@ -92,9 +100,9 @@ function Blocks(props: blockProps) {
   return (
     <div className={cn(className)}>
       <div className="px-10 py-3 text-[24px] font-[600] capitalize text-[#2483FF]">
-        <Link to="/data-store">Blockchain Explorer</Link>
+        <Link to="/data-store?params=blockchain">Blockchain Explorer</Link>
         <span className="mx-4">{'>'}</span>
-        <span className="text-[#292B2E]">transactions</span>
+        <span className="text-[#292B2E]">blocks</span>
       </div>
 
       <div className="flex px-10 py-3">
@@ -125,6 +133,14 @@ function Blocks(props: blockProps) {
             {
               value: 'flow',
               label: 'Flow'
+            },
+            {
+              value: 'bsc',
+              label: 'BSC'
+            },
+            {
+              value: 'btc',
+              label: 'BTC'
             }
           ]}
           onChange={handleChangeSelect}

@@ -105,7 +105,7 @@ export const getTransactionData = (params: TransactionReq) => {
   );
 };
 
-interface ethTokenDataRes {
+export interface ethTokenDataRes {
   address: string;
   owner: string;
   tokenId: string;
@@ -128,7 +128,17 @@ export const getEthTokenData = (params: ethTokenDataReq) => {
   );
 };
 
-interface flowTokenDataRes {
+export const getEthTokenDataByOwner = (owner: string) => {
+  return getData<null, { tokens: ethTokenDataRes[] }>(
+    `/etl/api/v1/token/ethereum/owner/${owner}`,
+    null,
+    {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  );
+};
+
+export interface flowTokenDataRes {
   address: string;
   owner: string;
   tokenId: string;
@@ -145,6 +155,16 @@ export const getFlowTokenData = (params: flowTokenDataReq) => {
   return getData<flowTokenDataReq, { tokens: flowTokenDataRes[] }>(
     '/etl/api/v1/token/flow',
     params,
+    {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  );
+};
+
+export const getFlowTokenDataByOwner = (owner: string) => {
+  return getData<null, { tokens: flowTokenDataRes[] }>(
+    `/etl/api/v1/token/flow/owner/${owner}`,
+    null,
     {
       'Content-Type': 'application/x-www-form-urlencoded'
     }

@@ -1,5 +1,6 @@
 import cn from 'classnames';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSearchParam } from 'react-use';
 
 import { Analytics } from '@/components/Analytics';
 import { BlockchainExplorer } from '@/components/BlockchainExplorer';
@@ -15,6 +16,13 @@ function DataStore(props: dataStoreProps) {
   const [dataStoreTab, setDataStoreTab] = useState<
     'Analytics' | 'Blockchain' | 'TokenData'
   >('TokenData');
+  const params = useSearchParam('params');
+
+  useEffect(() => {
+    if (params === 'blockchain') {
+      setDataStoreTab('Blockchain');
+    }
+  }, [params]);
 
   return (
     <div className={cn(className, 'mt-6')}>
@@ -39,7 +47,7 @@ function DataStore(props: dataStoreProps) {
           Blockchain Explorer
         </span>
 
-        <span
+        {/* <span
           className={cn(
             'ml-12 cursor-pointer',
             dataStoreTab === 'Analytics' && 'text-[#2483FF]'
@@ -47,7 +55,7 @@ function DataStore(props: dataStoreProps) {
           onClick={() => setDataStoreTab('Analytics')}
         >
           Analytics
-        </span>
+        </span> */}
       </div>
 
       {dataStoreTab === 'Analytics' && <Analytics />}

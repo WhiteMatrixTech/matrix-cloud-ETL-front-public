@@ -2,6 +2,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Select, Spin, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import cn from 'classnames';
+import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAsyncFn } from 'react-use';
@@ -52,7 +53,14 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       title: 'Timestamp',
       dataIndex: 'timestamp',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base',
+      render: (_, data) => {
+        return (
+          <div className="">
+            {dayjs(data.timestamp).format('YYYY-MM-DD hh:mm:ss')}
+          </div>
+        );
+      }
     },
     {
       title: 'Gas Used',
@@ -80,7 +88,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       title: 'Txn Hash',
       dataIndex: 'transactionHash',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base w-[20%]'
     },
     {
       title: 'Block Number',
@@ -92,26 +100,38 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       title: 'Timestamp',
       dataIndex: 'timestamp',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base',
+      render: (_, data) => {
+        return (
+          <div className="">
+            {dayjs(data.timestamp).format('YYYY-MM-DD hh:mm:ss')}
+          </div>
+        );
+      }
     },
     {
       title: 'From',
       dataIndex: 'from',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base w-[20%]'
     },
 
     {
       title: 'To',
       dataIndex: 'to',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base w-[20%]'
     },
     {
-      title: 'Value',
+      title: `Value (${selectedChain === 'flow' ? 'flow' : 'eth'})`,
       dataIndex: 'value',
-      ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base',
+      render: (_, data) => {
+        if (selectedChain === 'flow') {
+          return <div>{data.value}</div>;
+        }
+        return <div>{data.value / 1e18}</div>;
+      }
     }
   ];
 
@@ -186,6 +206,14 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
             {
               value: 'flow',
               label: 'Flow'
+            },
+            {
+              value: 'bsc',
+              label: 'BSC'
+            },
+            {
+              value: 'btc',
+              label: 'BTC'
             }
           ]}
           onChange={(value: string) => setSelectedChain(value)}

@@ -1,12 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { SearchOutlined } from '@ant-design/icons';
 import { Select, Spin, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import cn from 'classnames';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useAsyncFn } from 'react-use';
 
-import { getEthTokenData, getFlowTokenData } from '@/service/services';
+import {
+  ethTokenDataRes,
+  getEthTokenData,
+  getEthTokenDataByOwner,
+  getFlowTokenData,
+  getFlowTokenDataByOwner
+} from '@/service/services';
 
 interface TokenDataExplorerProps {
   className?: string;
@@ -29,19 +36,22 @@ interface TokenMetadataRaw {
 export function TokenDataExplorer(props: TokenDataExplorerProps) {
   const { className } = props;
   const [selectedChain, setSelectedChain] = useState<string>('ethereum');
+  const [searchValue, setSearchValue] = useState<string>('');
+  const [selectedSearch, setSelectedSearch] =
+    useState<string>('Contract Address');
 
   const Columns: ColumnsType<TokenDataColumnsType> = [
     {
       title: 'Contract Address',
       dataIndex: 'contractAddress',
       ellipsis: true,
-      className: 'text-[#000000] font-[700] text-base capitalize'
+      className: 'text-[#000000] font-[700] text-base'
     },
     {
       title: 'TokenId',
       dataIndex: 'tokenId',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base w-[8%]'
     },
     {
       title: 'Owner',
@@ -65,106 +75,79 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       title: 'Description',
       dataIndex: 'description',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base w-[20%]'
     },
     {
       title: 'Attributes',
       dataIndex: 'attributes',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
-    }
-  ];
-
-  const mockData = [
-    {
-      contractAddress: '0x97d4b4……64da',
-      tokenId: '0',
-      owner: 'mainnet_ethereum-0xC',
-      name: 'Theirsverse #0',
-      image: 'https://dl9da…',
-      description: 'Theirsverse has created a bra……',
-      attributes: '{“traits name”}'
-    },
-    {
-      contractAddress: '0x97d4b4……64da',
-      tokenId: '0',
-      owner: 'mainnet_ethereum-0xC',
-      name: 'Theirsverse #0',
-      image: 'https://dl9da…',
-      description: 'Theirsverse has created a bra……',
-      attributes: '{“traits name”}'
-    },
-    {
-      contractAddress: '0x97d4b4……64da',
-      tokenId: '0',
-      owner: 'mainnet_ethereum-0xC',
-      name: 'Theirsverse #0',
-      image: 'https://dl9da…',
-      description: 'Theirsverse has created a bra……',
-      attributes: '{“traits name”}'
+      className: 'text-[#000000d9] text-base w-[20%]'
     }
   ];
 
   const [
     { loading: getEthTokenDataLoading, value: ethTokenData },
     getEthTokenDataServices
-  ] = useAsyncFn(async () => {
-    const response = await getEthTokenData({});
-
-    if (response) {
-      const data: TokenDataColumnsType[] = [];
-
-      response.tokens.forEach((item) => {
-        const tokenMetadataRaw = JSON.parse(
-          item.tokenMetadataRaw
-        ) as TokenMetadataRaw;
-
-        data.push({
-          contractAddress: item.address,
-          tokenId: item.tokenId,
-          owner: item.owner,
-          name: tokenMetadataRaw.name || 'null',
-          image: tokenMetadataRaw.image || 'null',
-          description: tokenMetadataRaw.description || 'null',
-          attributes: JSON.stringify(tokenMetadataRaw.attributes) || 'null'
-        });
-      });
-
-      return data;
+  ] = useAsyncFn(async (address?: string, owner?: string) => {
+    let response: { tokens: ethTokenDataRes[] };
+    if (owner) {
+      response = await getEthTokenDataByOwner(owner);
+    } else {
+      response = await getEthTokenData({ address });
     }
 
-    // return response.tokens;
+    const data: TokenDataColumnsType[] = [];
+
+    response.tokens.forEach((item) => {
+      const tokenMetadataRaw = JSON.parse(
+        item.tokenMetadataRaw
+      ) as TokenMetadataRaw;
+
+      data.push({
+        contractAddress: item.address,
+        tokenId: item.tokenId,
+        owner: item.owner,
+        name: tokenMetadataRaw.name || 'null',
+        image: tokenMetadataRaw.image || 'null',
+        description: tokenMetadataRaw.description || 'null',
+        attributes: JSON.stringify(tokenMetadataRaw.attributes) || 'null'
+      });
+    });
+
+    return data;
   });
 
   const [
     { loading: getFlowTokenDataLoading, value: flowTokenData },
     getFlowTokenDataServices
-  ] = useAsyncFn(async () => {
-    const response = await getFlowTokenData({});
-
-    if (response) {
-      const data: TokenDataColumnsType[] = [];
-
-      response.tokens.forEach((item) => {
-        const tokenMetadataRaw = JSON.parse(
-          item.tokenMetadataRaw
-        ) as TokenMetadataRaw;
-
-        data.push({
-          contractAddress: item.address,
-          tokenId: item.tokenId,
-          owner: item.owner,
-          name: tokenMetadataRaw.name || 'null',
-          image: tokenMetadataRaw.image || 'null',
-          description: tokenMetadataRaw.description || 'null',
-          attributes: JSON.stringify(tokenMetadataRaw.attributes) || 'null'
-        });
-      });
-
-      return data;
+  ] = useAsyncFn(async (address?: string, owner?: string) => {
+    // const response = await getFlowTokenData({});
+    let response: { tokens: ethTokenDataRes[] };
+    if (owner) {
+      response = await getFlowTokenDataByOwner(owner);
+    } else {
+      response = await getFlowTokenData({ address });
     }
 
-    // return response.tokens;
+    const data: TokenDataColumnsType[] = [];
+
+    response.tokens.forEach((item) => {
+      const tokenMetadataRaw = JSON.parse(
+        item.tokenMetadataRaw
+      ) as TokenMetadataRaw;
+
+      data.push({
+        contractAddress: item.address,
+        tokenId: item.tokenId,
+        owner: item.owner,
+        name: tokenMetadataRaw.name || 'null',
+        image: tokenMetadataRaw.image || 'null',
+        description: tokenMetadataRaw.description || 'null',
+        attributes: JSON.stringify(tokenMetadataRaw.attributes) || 'null'
+      });
+    });
+
+    return data;
   });
 
   const tableData = useMemo(() => {
@@ -176,14 +159,60 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
   }, [ethTokenData, flowTokenData, selectedChain]);
 
   useEffect(() => {
-    void getEthTokenDataServices();
-    void getFlowTokenDataServices();
-  }, [getEthTokenDataServices, getFlowTokenDataServices, selectedChain]);
+    if (!searchValue) {
+      void getEthTokenDataServices();
+      void getFlowTokenDataServices();
+      return;
+    }
+    if (selectedSearch === 'Contract Address') {
+      void getEthTokenDataServices(searchValue);
+      void getFlowTokenDataServices(searchValue);
+      return;
+    }
+    if (selectedSearch === 'Owner') {
+      void getEthTokenDataServices(undefined, searchValue);
+      void getFlowTokenDataServices(undefined, searchValue);
+    }
+  }, [
+    getEthTokenDataServices,
+    getFlowTokenDataServices,
+    selectedChain,
+    searchValue,
+    selectedSearch
+  ]);
 
   return (
     <div className={cn(className, 'p-10')}>
       <div className="flex items-center">
-        <div className="text-[20px] text-[#2483FF]">Blockchain</div>
+        <Select
+          value={selectedSearch}
+          defaultValue="contractAddress"
+          style={{ width: '159px' }}
+          options={[
+            {
+              value: 'Contract Address',
+              label: 'Contract Address'
+            },
+            {
+              value: 'Owner',
+              label: 'Owner'
+            }
+          ]}
+          onChange={(value: string) => setSelectedSearch(value)}
+        />
+        <input
+          value={searchValue}
+          placeholder={`Search by ${selectedSearch}`}
+          className="h-10 w-[400px] border-[1px] border-[#D9D9D9] p-2 outline-none"
+          onChange={(e) => setSearchValue(e.target.value)}
+        />
+        <div
+          className="flex h-10 w-11 items-center justify-center bg-[#1890FF] text-[#FFFFFF]"
+          style={{ boxShadow: '0px 2px 0px rgba(0, 0, 0, 0.043)' }}
+        >
+          <SearchOutlined />
+        </div>
+        <div className="ml-10 text-[20px] text-[#2483FF]">Blockchain</div>
         <Select
           defaultValue="ethereum"
           style={{ width: '210px', marginLeft: '30px' }}
@@ -199,26 +228,6 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
           ]}
           onChange={(value: string) => setSelectedChain(value)}
         />
-
-        {/* <div className="ml-14 text-[20px] text-[#2483FF]">App</div>
-        <Select
-          defaultValue="theirsverse"
-          style={{ width: '210px', marginLeft: '30px' }}
-          options={[
-            {
-              value: 'theirsverse',
-              label: 'Theirsverse'
-            },
-            {
-              value: 'Phanta bear',
-              label: 'Phanta bear'
-            },
-            {
-              value: 'matrix world',
-              label: 'matrix world'
-            }
-          ]}
-        /> */}
       </div>
 
       <Spin spinning={status === 'loading'} tip="downloading">
