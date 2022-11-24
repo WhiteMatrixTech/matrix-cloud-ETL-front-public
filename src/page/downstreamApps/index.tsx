@@ -69,55 +69,8 @@ function DownstreamApps(props: downstreamAppsProps) {
           </div>
         );
       }
-    },
-    {
-      title: 'Action',
-      dataIndex: 'action',
-      render: () => {
-        return (
-          <div>
-            <span className="text-[14px] text-[#2483FF] underline outline-offset-4">
-              See Detail
-            </span>
-          </div>
-        );
-      }
     }
   ];
-
-  // const mockData = [
-  //   {
-  //     blockchain: 'Ethereum',
-  //     appName: '1-Sync',
-  //     eventHandlers:
-  //       'OneSyncEnrollmentEventHandler、OneSyncNotifierEventHandler、OneSyncEnrollmentEventHandler、OneSyncTokenOwnershipUpdateEventHandler'
-  //   },
-  //   {
-  //     blockchain: 'Ethereum',
-  //     appName: 'PhantaBear',
-  //     eventHandlers: 'PhantaBearEventHandler、PhantaDogEventHandler'
-  //   },
-  //   {
-  //     blockchain: 'Ethereum',
-  //     appName: 'Theirsverse',
-  //     eventHandlers: 'TheirsverseTransferEventHandler'
-  //   },
-  //   {
-  //     blockchain: 'Flow',
-  //     appName: 'Matrix Market',
-  //     eventHandlers: 'MatrixMarketEventHandler'
-  //   },
-  //   {
-  //     blockchain: 'BTC',
-  //     appName: 'test',
-  //     eventHandlers: 'testHandlers'
-  //   },
-  //   {
-  //     blockchain: 'Flow',
-  //     appName: 'Flownia',
-  //     eventHandlers: 'FlowniaEventHandler'
-  //   }
-  // ];
 
   const [
     { loading: getDownstreamAppsLoading, value: downstreamAppsData },
@@ -145,7 +98,7 @@ function DownstreamApps(props: downstreamAppsProps) {
             columns={columns}
             dataSource={downstreamAppsData}
             loading={getDownstreamAppsLoading}
-            pagination={false}
+            // pagination={false}
             onChange={handleChange}
           />
         </div>

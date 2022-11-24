@@ -60,49 +60,6 @@ function EventHandlers(props: dataStoreProps) {
     }
   ];
 
-  // const mockData = [
-  //   {
-  //     blockchain: 'Ethereum',
-  //     handlerName: 'OneSyncEnrollmentEventHandler',
-  //     type: 'Custom'
-  //   },
-  //   {
-  //     blockchain: 'Flow',
-  //     handlerName: 'OneSyncNotifierEventHandler',
-  //     type: 'Custom'
-  //   },
-  //   {
-  //     blockchain: 'BTC',
-  //     handlerName: 'OneSyncEnrollmentEventHandler',
-  //     type: 'Custom'
-  //   },
-  //   {
-  //     blockchain: 'Ethereum',
-  //     handlerName: 'OneSyncEnrollmentEventHandler',
-  //     type: 'Custom'
-  //   },
-  //   {
-  //     blockchain: 'Ethereum',
-  //     handlerName: 'OneSyncEnrollmentEventHandler',
-  //     type: 'Custom'
-  //   },
-  //   {
-  //     blockchain: 'Ethereum',
-  //     handlerName: 'OneSyncEnrollmentEventHandler',
-  //     type: 'Custom'
-  //   },
-  //   {
-  //     blockchain: 'Ethereum',
-  //     handlerName: 'OneSyncEnrollmentEventHandler',
-  //     type: 'Custom'
-  //   },
-  //   {
-  //     blockchain: 'Ethereum',
-  //     handlerName: 'OneSyncEnrollmentEventHandler',
-  //     type: 'Custom'
-  //   }
-  // ];
-
   const [
     { loading: getEventHandlersLoading, value: eventHandlerData },
     getEventHandlers
@@ -129,7 +86,7 @@ function EventHandlers(props: dataStoreProps) {
             columns={columns}
             dataSource={eventHandlerData}
             loading={getEventHandlersLoading}
-            pagination={false}
+            // pagination={false}
             onChange={handleChange}
           />
         </div>

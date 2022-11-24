@@ -2,33 +2,38 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Select, Spin, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import cn from 'classnames';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useAsyncFn } from 'react-use';
+
+import { getBlockData, getTransactionData } from '@/service/services';
 
 interface BlockchainExplorerProps {
   className?: string;
 }
 
 interface BlockColumnsType {
-  blockNumber: string;
-  txHash: string;
-  size: string;
-  gasUsed: string;
+  blockNumber: number;
+  gasUsed: number;
+  size: number;
   timestamp: string;
-  transactionCount: string;
+  transactionCount: number;
 }
 
 interface TransactionColumnsType {
-  txHash: string;
-  blockNumber: string;
-  method: string;
+  blockNumber: number;
   from: string;
   timestamp: string;
   to: string;
-  Value: string;
+  transactionHash: string;
+  value: number;
 }
 
 export function BlockchainExplorer(props: BlockchainExplorerProps) {
   const { className } = props;
+
+  const [selectedChain, setSelectedChain] = useState<string>('ethereum');
+  const [searchValue, setSearchValue] = useState<string>('');
 
   const blockColumns: ColumnsType<BlockColumnsType> = [
     {
@@ -36,12 +41,6 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       dataIndex: 'blockNumber',
       ellipsis: true,
       className: 'text-[#000000] font-[700] text-base capitalize'
-    },
-    {
-      title: 'Txn Hash',
-      dataIndex: 'txHash',
-      ellipsis: true,
-      className: 'text-[#000000d9] text-base'
     },
     {
       title: 'Size',
@@ -79,7 +78,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
   const transactionColumns: ColumnsType<TransactionColumnsType> = [
     {
       title: 'Txn Hash',
-      dataIndex: 'txHash',
+      dataIndex: 'transactionHash',
       ellipsis: true,
       className: 'text-[#000000d9] text-base'
     },
@@ -88,12 +87,6 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       dataIndex: 'blockNumber',
       ellipsis: true,
       className: 'text-[#000000] font-[700] text-base capitalize'
-    },
-    {
-      title: 'Method',
-      dataIndex: 'method',
-      ellipsis: true,
-      className: 'text-[#000000d9] text-base'
     },
     {
       title: 'Timestamp',
@@ -122,69 +115,58 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
     }
   ];
 
-  const mockBlockData = [
-    {
-      blockNumber: '12714233',
-      txHash: '0x97d4b4……64da',
-      size: '27036',
-      gasUsed: '12370451',
-      timestamp: '2022-11-07T02:18:57.000Z',
-      transactionCount: '111'
-    },
-    {
-      blockNumber: '12714233',
-      txHash: '0x97d4b4……64da',
-      size: '27036',
-      gasUsed: '12370451',
-      timestamp: '2022-11-07T02:18:57.000Z',
-      transactionCount: '111'
-    },
-    {
-      blockNumber: '12714233',
-      txHash: '0x97d4b4……64da',
-      size: '27036',
-      gasUsed: '12370451',
-      timestamp: '2022-11-07T02:18:57.000Z',
-      transactionCount: '111'
+  const [
+    { loading: getBlockDataLoading, value: blocksData },
+    getBlocksServices
+  ] = useAsyncFn(async (chainType: string, blockNumber?: number) => {
+    if (blockNumber) {
+      const response = await getBlockData({ chainType, blockNumber });
+      return response.blocks.length > 3
+        ? response.blocks.slice(0, 3)
+        : response.blocks;
     }
-  ];
+    const response = await getBlockData({ chainType });
 
-  const mockTransactionData = [
-    {
-      txHash: '0x97d4b4……64da',
-      blockNumber: '12714233',
-      method: 'Transfer',
-      from: '0x97d4b4……64da',
-      timestamp: '2022-11-07T02:18:57.000Z',
-      to: '0x97d4b4……64da',
-      Value: '0 Ether'
-    },
-    {
-      txHash: '0x97d4b4……64da',
-      blockNumber: '12714233',
-      method: 'Transfer',
-      from: '0x97d4b4……64da',
-      timestamp: '2022-11-07T02:18:57.000Z',
-      to: '0x97d4b4……64da',
-      Value: '0 Ether'
-    },
-    {
-      txHash: '0x97d4b4……64da',
-      blockNumber: '12714233',
-      method: 'Transfer',
-      from: '0x97d4b4……64da',
-      timestamp: '2022-11-07T02:18:57.000Z',
-      to: '0x97d4b4……64da',
-      Value: '0 Ether'
+    return response.blocks.length > 3
+      ? response.blocks.slice(0, 3)
+      : response.blocks;
+  });
+
+  const [
+    { loading: getTransactionsLoading, value: transactionsData },
+    getTransactionsServices
+  ] = useAsyncFn(async (chainType: string, blockNumber?: number) => {
+    if (blockNumber) {
+      const response = await getTransactionData({ chainType, blockNumber });
+      return response.transactions.length > 3
+        ? response.transactions.slice(0, 3)
+        : response.transactions;
     }
-  ];
+    const response = await getTransactionData({ chainType });
+
+    return response.transactions.length > 3
+      ? response.transactions.slice(0, 3)
+      : response.transactions;
+  });
+
+  useEffect(() => {
+    if (searchValue) {
+      void getBlocksServices(selectedChain, Number(searchValue));
+      void getTransactionsServices(selectedChain, Number(searchValue));
+      return;
+    }
+    void getBlocksServices(selectedChain);
+    void getTransactionsServices(selectedChain);
+  }, [getBlocksServices, getTransactionsServices, searchValue, selectedChain]);
 
   return (
     <div className={cn(className, 'py-20')}>
       <div className="flex">
         <input
-          placeholder="Search by Txn Hash / Block"
+          value={searchValue}
+          placeholder="Search by block number"
           className="h-10 w-[500px] border-[1px] border-[#D9D9D9] p-2 outline-none"
+          onChange={(e) => setSearchValue(e.target.value)}
         />
         <div
           className="flex h-10 w-11 items-center justify-center bg-[#1890FF] text-[#FFFFFF]"
@@ -204,12 +186,9 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
             {
               value: 'flow',
               label: 'Flow'
-            },
-            {
-              value: 'btc',
-              label: 'BTC'
             }
           ]}
+          onChange={(value: string) => setSelectedChain(value)}
         />
       </div>
 
@@ -221,13 +200,14 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
             <Table
               rowKey="userId"
               columns={blockColumns}
-              dataSource={mockBlockData}
-              // loading={getAdaptServicesLoading}
+              dataSource={blocksData}
+              loading={getBlockDataLoading}
               pagination={false}
-              // onChange={handleChange}
             />
-            <div className="mt-[2px] text-right text-[16px] font-[600] text-[#1890FF]">
-              View More <span className="mx-2">{'>'}</span>
+            <div className="mt-[2px] cursor-pointer text-right text-[16px] font-[600] text-[#1890FF]">
+              <Link to="/data-store/blocks">
+                View More <span className="mx-2">{'>'}</span>
+              </Link>
             </div>
           </div>
         </Spin>
@@ -241,13 +221,14 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
             <Table
               rowKey="userId"
               columns={transactionColumns}
-              dataSource={mockTransactionData}
-              // loading={getAdaptServicesLoading}
+              dataSource={transactionsData}
+              loading={getTransactionsLoading}
               pagination={false}
-              // onChange={handleChange}
             />
-            <div className="mt-[2px] text-right text-[16px] font-[600] text-[#1890FF]">
-              View More <span className="mx-2">{'>'}</span>
+            <div className="mt-[2px] cursor-pointer text-right text-[16px] font-[600] text-[#1890FF]">
+              <Link to="/data-store/transactions">
+                View More <span className="mx-2">{'>'}</span>
+              </Link>
             </div>
           </div>
         </Spin>

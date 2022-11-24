@@ -1,7 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Select, Spin, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import cn from 'classnames';
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useAsyncFn } from 'react-use';
+
+import { getEthTokenData, getFlowTokenData } from '@/service/services';
 
 interface TokenDataExplorerProps {
   className?: string;
@@ -10,7 +15,6 @@ interface TokenDataExplorerProps {
 interface TokenDataColumnsType {
   contractAddress: string;
   tokenId: string;
-  blockNumber: string;
   owner: string;
   name: string;
   image: string;
@@ -18,8 +22,13 @@ interface TokenDataColumnsType {
   attributes: string;
 }
 
+interface TokenMetadataRaw {
+  [key: string]: any;
+}
+
 export function TokenDataExplorer(props: TokenDataExplorerProps) {
   const { className } = props;
+  const [selectedChain, setSelectedChain] = useState<string>('ethereum');
 
   const Columns: ColumnsType<TokenDataColumnsType> = [
     {
@@ -31,12 +40,6 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
     {
       title: 'TokenId',
       dataIndex: 'tokenId',
-      ellipsis: true,
-      className: 'text-[#000000d9] text-base'
-    },
-    {
-      title: 'BlockNumber',
-      dataIndex: 'blockNumber',
       ellipsis: true,
       className: 'text-[#000000d9] text-base'
     },
@@ -76,7 +79,6 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
     {
       contractAddress: '0x97d4b4……64da',
       tokenId: '0',
-      blockNumber: '12714233',
       owner: 'mainnet_ethereum-0xC',
       name: 'Theirsverse #0',
       image: 'https://dl9da…',
@@ -86,7 +88,6 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
     {
       contractAddress: '0x97d4b4……64da',
       tokenId: '0',
-      blockNumber: '12714233',
       owner: 'mainnet_ethereum-0xC',
       name: 'Theirsverse #0',
       image: 'https://dl9da…',
@@ -96,7 +97,6 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
     {
       contractAddress: '0x97d4b4……64da',
       tokenId: '0',
-      blockNumber: '12714233',
       owner: 'mainnet_ethereum-0xC',
       name: 'Theirsverse #0',
       image: 'https://dl9da…',
@@ -104,6 +104,81 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       attributes: '{“traits name”}'
     }
   ];
+
+  const [
+    { loading: getEthTokenDataLoading, value: ethTokenData },
+    getEthTokenDataServices
+  ] = useAsyncFn(async () => {
+    const response = await getEthTokenData({});
+
+    if (response) {
+      const data: TokenDataColumnsType[] = [];
+
+      response.tokens.forEach((item) => {
+        const tokenMetadataRaw = JSON.parse(
+          item.tokenMetadataRaw
+        ) as TokenMetadataRaw;
+
+        data.push({
+          contractAddress: item.address,
+          tokenId: item.tokenId,
+          owner: item.owner,
+          name: tokenMetadataRaw.name || 'null',
+          image: tokenMetadataRaw.image || 'null',
+          description: tokenMetadataRaw.description || 'null',
+          attributes: JSON.stringify(tokenMetadataRaw.attributes) || 'null'
+        });
+      });
+
+      return data;
+    }
+
+    // return response.tokens;
+  });
+
+  const [
+    { loading: getFlowTokenDataLoading, value: flowTokenData },
+    getFlowTokenDataServices
+  ] = useAsyncFn(async () => {
+    const response = await getFlowTokenData({});
+
+    if (response) {
+      const data: TokenDataColumnsType[] = [];
+
+      response.tokens.forEach((item) => {
+        const tokenMetadataRaw = JSON.parse(
+          item.tokenMetadataRaw
+        ) as TokenMetadataRaw;
+
+        data.push({
+          contractAddress: item.address,
+          tokenId: item.tokenId,
+          owner: item.owner,
+          name: tokenMetadataRaw.name || 'null',
+          image: tokenMetadataRaw.image || 'null',
+          description: tokenMetadataRaw.description || 'null',
+          attributes: JSON.stringify(tokenMetadataRaw.attributes) || 'null'
+        });
+      });
+
+      return data;
+    }
+
+    // return response.tokens;
+  });
+
+  const tableData = useMemo(() => {
+    if (selectedChain === 'flow') {
+      return flowTokenData;
+    }
+
+    return ethTokenData;
+  }, [ethTokenData, flowTokenData, selectedChain]);
+
+  useEffect(() => {
+    void getEthTokenDataServices();
+    void getFlowTokenDataServices();
+  }, [getEthTokenDataServices, getFlowTokenDataServices, selectedChain]);
 
   return (
     <div className={cn(className, 'p-10')}>
@@ -122,9 +197,10 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
               label: 'Flow'
             }
           ]}
+          onChange={(value: string) => setSelectedChain(value)}
         />
 
-        <div className="ml-14 text-[20px] text-[#2483FF]">App</div>
+        {/* <div className="ml-14 text-[20px] text-[#2483FF]">App</div>
         <Select
           defaultValue="theirsverse"
           style={{ width: '210px', marginLeft: '30px' }}
@@ -142,7 +218,7 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
               label: 'matrix world'
             }
           ]}
-        />
+        /> */}
       </div>
 
       <Spin spinning={status === 'loading'} tip="downloading">
@@ -150,10 +226,8 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
           <Table
             rowKey="userId"
             columns={Columns}
-            dataSource={mockData}
-            // loading={getAdaptServicesLoading}
-            // pagination={false}
-            // onChange={handleChange}
+            dataSource={tableData}
+            loading={getEthTokenDataLoading || getFlowTokenDataLoading}
           />
         </div>
       </Spin>

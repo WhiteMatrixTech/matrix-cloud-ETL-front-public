@@ -92,72 +92,6 @@ function AdapterServices(props: adapterServicesProps) {
     }
   ];
 
-  // const mockData = [
-  //   {
-  //     blockchain: 'Ethereum',
-  //     taskName: 'spork13-reverse',
-  //     taskId: 998766719,
-  //     createTime: 0,
-  //     status: 'PROCESSING'
-  //   },
-  //   {
-  //     blockchain: 'Flow',
-  //     taskName: 'phantabear',
-  //     taskId: 998766719,
-  //     createTime: 0,
-  //     status: 'PROCESSING'
-  //   },
-  //   {
-  //     blockchain: 'BTC',
-  //     taskName: 'BYC-task',
-  //     taskId: 998766719,
-  //     createTime: 0,
-  //     status: 'FAILURE'
-  //   },
-  //   {
-  //     blockchain: 'Ethereum',
-  //     taskName: 'spork13-reverse',
-  //     taskId: 998766719,
-  //     createTime: 0,
-  //     status: 'PROCESSING'
-  //   },
-  //   {
-  //     blockchain: 'Flow',
-  //     taskName: 'phantabear',
-  //     taskId: 998766719,
-  //     createTime: 0,
-  //     status: 'PROCESSING'
-  //   },
-  //   {
-  //     blockchain: 'BTC',
-  //     taskName: 'BYC-task',
-  //     taskId: 998766719,
-  //     createTime: 0,
-  //     status: 'FAILURE'
-  //   },
-  //   {
-  //     blockchain: 'Ethereum',
-  //     taskName: 'spork13-reverse',
-  //     taskId: 998766719,
-  //     createTime: 0,
-  //     status: 'PROCESSING'
-  //   },
-  //   {
-  //     blockchain: 'Flow',
-  //     taskName: 'phantabear',
-  //     taskId: 998766719,
-  //     createTime: 0,
-  //     status: 'PROCESSING'
-  //   },
-  //   {
-  //     blockchain: 'BTC',
-  //     taskName: 'BYC-task',
-  //     taskId: 998766719,
-  //     createTime: 0,
-  //     status: 'FAILURE'
-  //   }
-  // ];
-
   const [
     { loading: getAdaptServicesLoading, value: adaptServicesData },
     getAdaptServices
@@ -174,7 +108,7 @@ function AdapterServices(props: adapterServicesProps) {
   return (
     <div className={cn(className)}>
       <div className="text-[24px] font-[600] capitalize text-[#2483FF] ">
-        Adapter Services
+        Adapter Tasks
       </div>
 
       <Spin spinning={status === 'loading'} tip="downloading">
@@ -184,7 +118,7 @@ function AdapterServices(props: adapterServicesProps) {
             columns={columns}
             dataSource={adaptServicesData}
             loading={getAdaptServicesLoading}
-            pagination={false}
+            // pagination={false}
             onChange={handleChange}
           />
         </div>

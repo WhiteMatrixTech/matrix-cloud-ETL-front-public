@@ -8,7 +8,7 @@ type MenuItem = Required<MenuProps>['items'][number];
 
 export const MenuList: MenuItem[] = [
   {
-    label: 'Adapter Services',
+    label: 'Adapter Tasks',
     key: '/adapter-services'
   },
   {

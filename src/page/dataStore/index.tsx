@@ -14,20 +14,21 @@ function DataStore(props: dataStoreProps) {
 
   const [dataStoreTab, setDataStoreTab] = useState<
     'Analytics' | 'Blockchain' | 'TokenData'
-  >('Analytics');
+  >('TokenData');
 
   return (
     <div className={cn(className, 'mt-6')}>
       <div className="font-Sans text-[24px] font-[500] capitalize text-[#A0A0A0]">
         <span
           className={cn(
-            'cursor-pointer',
-            dataStoreTab === 'Analytics' && 'text-[#2483FF]'
+            ' cursor-pointer',
+            dataStoreTab === 'TokenData' && 'text-[#2483FF]'
           )}
-          onClick={() => setDataStoreTab('Analytics')}
+          onClick={() => setDataStoreTab('TokenData')}
         >
-          Analytics
+          Token Data Explorer
         </span>
+
         <span
           className={cn(
             'ml-12 cursor-pointer',
@@ -37,14 +38,15 @@ function DataStore(props: dataStoreProps) {
         >
           Blockchain Explorer
         </span>
+
         <span
           className={cn(
             'ml-12 cursor-pointer',
-            dataStoreTab === 'TokenData' && 'text-[#2483FF]'
+            dataStoreTab === 'Analytics' && 'text-[#2483FF]'
           )}
-          onClick={() => setDataStoreTab('TokenData')}
+          onClick={() => setDataStoreTab('Analytics')}
         >
-          Token Data Explorer
+          Analytics
         </span>
       </div>
 
