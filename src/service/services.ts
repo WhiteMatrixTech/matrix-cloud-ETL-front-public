@@ -170,3 +170,21 @@ export const getFlowTokenDataByOwner = (owner: string) => {
     }
   );
 };
+
+interface EventsDataRes {
+  transactionHash: string;
+  blockNumber: number;
+  topics: string[];
+  address: string;
+  data: string;
+}
+
+export const getEventsData = (chainType: string) => {
+  return getData<{ chainType: string }, { events: EventsDataRes[] }>(
+    '/etl/api/v1/blockchain/events',
+    { chainType },
+    {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  );
+};

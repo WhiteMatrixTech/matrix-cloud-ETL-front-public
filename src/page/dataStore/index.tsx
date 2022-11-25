@@ -34,7 +34,7 @@ function DataStore(props: dataStoreProps) {
           )}
           onClick={() => setDataStoreTab('TokenData')}
         >
-          Token Data Explorer
+          Token Data
         </span>
 
         <span
@@ -44,7 +44,7 @@ function DataStore(props: dataStoreProps) {
           )}
           onClick={() => setDataStoreTab('Blockchain')}
         >
-          Blockchain Explorer
+          Blockchain Data
         </span>
 
         {/* <span

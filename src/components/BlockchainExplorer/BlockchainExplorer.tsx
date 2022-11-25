@@ -7,7 +7,11 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAsyncFn } from 'react-use';
 
-import { getBlockData, getTransactionData } from '@/service/services';
+import {
+  getBlockData,
+  getEventsData,
+  getTransactionData
+} from '@/service/services';
 
 interface BlockchainExplorerProps {
   className?: string;
@@ -28,6 +32,14 @@ interface TransactionColumnsType {
   to: string;
   transactionHash: string;
   value: number;
+}
+
+interface EventsColumnsType {
+  transactionHash: string;
+  blockNumber: number;
+  topics: string[];
+  address: string;
+  data: string;
 }
 
 export function BlockchainExplorer(props: BlockchainExplorerProps) {
@@ -135,6 +147,51 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
     }
   ];
 
+  const eventsColumns: ColumnsType<EventsColumnsType> = [
+    {
+      title: 'Topics',
+      dataIndex: 'topics',
+      ellipsis: true,
+      className: 'text-[#000000d9] text-base w-[25%]',
+      render: (_, data) => {
+        return (
+          <div>
+            {data.topics.map((item, index) => (
+              <div key={index} className="m-[5px] text-[#000000d9]">
+                {`"${item}"`}
+                {index >= data.topics.length - 1 ? '' : '、'}
+              </div>
+            ))}
+          </div>
+        );
+      }
+    },
+    {
+      title: 'Txn Hash',
+      dataIndex: 'transactionHash',
+      ellipsis: true,
+      className: 'text-[#000000d9] text-base'
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address',
+      ellipsis: true,
+      className: 'text-[#000000d9] text-base'
+    },
+    {
+      title: 'Block Number',
+      dataIndex: 'blockNumber',
+      ellipsis: true,
+      className: 'text-[#000000] font-[700] text-base w-[15%]'
+    },
+    {
+      title: 'Data',
+      dataIndex: 'data',
+      ellipsis: true,
+      className: 'text-[#000000d9] text-base'
+    }
+  ];
+
   const [
     { loading: getBlockDataLoading, value: blocksData },
     getBlocksServices
@@ -169,7 +226,17 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       : response.transactions;
   });
 
+  const [{ loading: getEventsLoading, value: eventsData }, getEventsServices] =
+    useAsyncFn(async () => {
+      const response = await getEventsData(selectedChain);
+
+      return response.events.length > 3
+        ? response.events.slice(0, 3)
+        : response.events;
+    });
+
   useEffect(() => {
+    void getEventsServices();
     if (searchValue) {
       void getBlocksServices(selectedChain, Number(searchValue));
       void getTransactionsServices(selectedChain, Number(searchValue));
@@ -177,7 +244,13 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
     }
     void getBlocksServices(selectedChain);
     void getTransactionsServices(selectedChain);
-  }, [getBlocksServices, getTransactionsServices, searchValue, selectedChain]);
+  }, [
+    getBlocksServices,
+    getEventsServices,
+    getTransactionsServices,
+    searchValue,
+    selectedChain
+  ]);
 
   return (
     <div className={cn(className, 'py-20')}>
@@ -210,10 +283,6 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
             {
               value: 'bsc',
               label: 'BSC'
-            },
-            {
-              value: 'btc',
-              label: 'BTC'
             }
           ]}
           onChange={(value: string) => setSelectedChain(value)}
@@ -255,6 +324,27 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
             />
             <div className="mt-[2px] cursor-pointer text-right text-[16px] font-[600] text-[#1890FF]">
               <Link to="/data-store/transactions">
+                View More <span className="mx-2">{'>'}</span>
+              </Link>
+            </div>
+          </div>
+        </Spin>
+      </div>
+
+      <div className="mt-14">
+        <div className="text-[20px] text-[#2483FF]">Latest Events</div>
+
+        <Spin spinning={status === 'loading'} tip="downloading">
+          <div className={cn(className, 'pt-10 font-Roboto')}>
+            <Table
+              rowKey="userId"
+              columns={eventsColumns}
+              dataSource={eventsData}
+              loading={getEventsLoading}
+              pagination={false}
+            />
+            <div className="mt-[2px] cursor-pointer text-right text-[16px] font-[600] text-[#1890FF]">
+              <Link to="/data-store/events">
                 View More <span className="mx-2">{'>'}</span>
               </Link>
             </div>

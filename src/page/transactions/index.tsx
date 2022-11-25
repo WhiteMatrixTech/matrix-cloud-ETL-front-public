@@ -145,10 +145,6 @@ function Transactions(props: transactionProps) {
             {
               value: 'bsc',
               label: 'BSC'
-            },
-            {
-              value: 'btc',
-              label: 'BTC'
             }
           ]}
           onChange={(value: string) => setSelectedChain(value)}

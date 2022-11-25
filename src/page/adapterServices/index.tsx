@@ -107,7 +107,7 @@ function AdapterServices(props: adapterServicesProps) {
   return (
     <div className={cn(className)}>
       <div className="text-[24px] font-[600] capitalize text-[#2483FF] ">
-        Adapter Tasks
+        Data Adapter Jobs
       </div>
 
       <Spin spinning={status === 'loading'} tip="downloading">

@@ -9,6 +9,7 @@ import Blocks from './page/blocks';
 import DataStore from './page/dataStore';
 import DownstreamApps from './page/downstreamApps';
 import EventHandlers from './page/eventHandlers';
+import Events from './page/events';
 import Transactions from './page/transactions';
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         <Route path="/data-store" element={<DataStore />} />
         <Route path="/data-store/blocks" element={<Blocks />} />
         <Route path="/data-store/transactions" element={<Transactions />} />
+        <Route path="/data-store/events" element={<Events />} />
       </Routes>
     </Layout>
   );

@@ -137,10 +137,6 @@ function Blocks(props: blockProps) {
             {
               value: 'bsc',
               label: 'BSC'
-            },
-            {
-              value: 'btc',
-              label: 'BTC'
             }
           ]}
           onChange={handleChangeSelect}

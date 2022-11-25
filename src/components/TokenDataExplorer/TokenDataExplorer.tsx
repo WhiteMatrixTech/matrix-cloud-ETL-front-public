@@ -182,7 +182,7 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
   ]);
 
   return (
-    <div className={cn(className, 'p-10')}>
+    <div className={cn(className, 'py-10')}>
       <div className="flex items-center">
         <Select
           value={selectedSearch}
