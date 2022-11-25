@@ -68,7 +68,7 @@ function AdapterServices(props: adapterServicesProps) {
       render: (_, data) => {
         return (
           <div className="">
-            {dayjs(data.createTime).format('YYYY-MM-DD hh:mm:ss')}
+            {dayjs(Number(data.createTime)).format('YYYY-MM-DD hh:mm:ss')}
           </div>
         );
       }

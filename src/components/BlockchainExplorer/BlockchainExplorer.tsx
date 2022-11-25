@@ -57,7 +57,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       render: (_, data) => {
         return (
           <div className="">
-            {dayjs(data.timestamp).format('YYYY-MM-DD hh:mm:ss')}
+            {dayjs(Number(data.timestamp)).format('YYYY-MM-DD hh:mm:ss')}
           </div>
         );
       }
@@ -104,7 +104,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       render: (_, data) => {
         return (
           <div className="">
-            {dayjs(data.timestamp).format('YYYY-MM-DD hh:mm:ss')}
+            {dayjs(Number(data.timestamp)).format('YYYY-MM-DD hh:mm:ss')}
           </div>
         );
       }
