@@ -59,7 +59,14 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       title: 'Size',
       dataIndex: 'size',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base',
+      render: (_, data) => {
+        if (data.size) {
+          return <div>{data.size}</div>;
+        }
+
+        return <div>null</div>;
+      }
     },
     {
       title: 'Timestamp',
@@ -78,7 +85,14 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       title: 'Gas Used',
       dataIndex: 'gasUsed',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base',
+      render: (_, data) => {
+        if (data.gasUsed) {
+          return <div>{data.gasUsed}</div>;
+        }
+
+        return <div>null</div>;
+      }
     },
     {
       title: 'Transaction Count',
@@ -125,22 +139,42 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       title: 'From',
       dataIndex: 'from',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base w-[20%]'
+      className: 'text-[#000000d9] text-base w-[20%]',
+      render: (_, data) => {
+        if (data.from) {
+          return <div>{data.from}</div>;
+        }
+
+        return <div>null</div>;
+      }
     },
 
     {
       title: 'To',
       dataIndex: 'to',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base w-[20%]'
+      className: 'text-[#000000d9] text-base w-[20%]',
+      render: (_, data) => {
+        if (data.to) {
+          return <div>{data.to}</div>;
+        }
+
+        return <div>null</div>;
+      }
     },
     {
-      title: `Value (${selectedChain === 'flow' ? 'flow' : 'eth'})`,
+      title: `Value (${
+        selectedChain === 'bsc'
+          ? 'BNB'
+          : selectedChain === 'flow'
+          ? 'Flow'
+          : 'ETH'
+      })`,
       dataIndex: 'value',
       className: 'text-[#000000d9] text-base',
       render: (_, data) => {
         if (selectedChain === 'flow') {
-          return <div>{data.value}</div>;
+          return <div>{data.value || 'null'}</div>;
         }
         return <div>{data.value / 1e18}</div>;
       }
@@ -227,8 +261,8 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
   });
 
   const [{ loading: getEventsLoading, value: eventsData }, getEventsServices] =
-    useAsyncFn(async () => {
-      const response = await getEventsData(selectedChain);
+    useAsyncFn(async (chainType: string) => {
+      const response = await getEventsData(chainType);
 
       return response.events.length > 3
         ? response.events.slice(0, 3)
@@ -236,7 +270,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
     });
 
   useEffect(() => {
-    void getEventsServices();
+    void getEventsServices(selectedChain);
     if (searchValue) {
       void getBlocksServices(selectedChain, Number(searchValue));
       void getTransactionsServices(selectedChain, Number(searchValue));

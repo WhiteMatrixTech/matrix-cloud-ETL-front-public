@@ -70,10 +70,22 @@ function Transactions(props: transactionProps) {
       title: 'To',
       dataIndex: 'to',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base w-[20%]'
+      className: 'text-[#000000d9] text-base w-[20%]',
+      render: (_, data) => {
+        if (data.to) {
+          return <div>{data.to}</div>;
+        }
+        return <div>null</div>;
+      }
     },
     {
-      title: `Value (${selectedChain === 'flow' ? 'flow' : 'eth'})`,
+      title: `Value (${
+        selectedChain === 'bsc'
+          ? 'BNB'
+          : selectedChain === 'flow'
+          ? 'Flow'
+          : 'ETH'
+      })`,
       dataIndex: 'value',
       className: 'text-[#000000d9] text-base',
       render: (_, data) => {
