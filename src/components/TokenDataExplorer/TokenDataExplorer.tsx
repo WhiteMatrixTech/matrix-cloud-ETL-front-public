@@ -45,7 +45,10 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       title: 'Contract Address',
       dataIndex: 'contractAddress',
       ellipsis: true,
-      className: 'text-[#000000] font-[700] text-base'
+      className: 'text-[#000000] font-[700] text-base',
+      render: (_, data) => {
+        return <div>{data.contractAddress.split('-')[1]}</div>;
+      }
     },
     {
       title: 'TokenId',
