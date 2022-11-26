@@ -1,8 +1,9 @@
 import { Spin } from 'antd';
-import Table, { ColumnsType } from 'antd/lib/table';
+import Table, { ColumnsType, TableProps } from 'antd/lib/table';
+import { FilterValue } from 'antd/lib/table/interface';
 import cn from 'classnames';
 import dayjs from 'dayjs';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAsyncFn } from 'react-use';
 
 import { getTaskData } from '@/service/services';
@@ -21,19 +22,37 @@ interface columnsType {
 
 function AdapterServices(props: adapterServicesProps) {
   const { className } = props;
+  const [filteredInfo, setFilteredInfo] = useState<
+    Record<string, FilterValue | null>
+  >({});
+
+  const handleChange: TableProps<columnsType>['onChange'] = (
+    _pagination,
+    filters
+  ) => {
+    setFilteredInfo(filters);
+  };
 
   const columns: ColumnsType<columnsType> = [
     {
       title: 'Blockchain',
       dataIndex: 'blockchain',
       ellipsis: true,
-      className: 'text-[#000000] font-[700] text-base'
+      filters: [
+        { text: 'Flow', value: 'flow' },
+        { text: 'Ethereum', value: 'ethereum' }
+      ],
+      filteredValue: filteredInfo.blockchain || null,
+      onFilter: (value, record) => {
+        return record.blockchain === value;
+      },
+      className: 'text-[#000000] font-[700] text-base capitalize'
     },
     {
       title: 'Task Name',
       dataIndex: 'taskName',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base w-[40%]'
     },
     {
       title: 'TaskId',
@@ -48,7 +67,9 @@ function AdapterServices(props: adapterServicesProps) {
       className: 'text-[#000000d9] text-base',
       render: (_, data) => {
         return (
-          <div>{dayjs(data.createTime).format('YYYY-MM-DD hh:mm:ss')}</div>
+          <div className="">
+            {dayjs(Number(data.createTime)).format('YYYY-MM-DD hh:mm:ss')}
+          </div>
         );
       }
     },
@@ -70,72 +91,6 @@ function AdapterServices(props: adapterServicesProps) {
     }
   ];
 
-  // const mockData = [
-  //   {
-  //     blockchain: 'Ethereum',
-  //     taskName: 'spork13-reverse',
-  //     taskId: 998766719,
-  //     createTime: 0,
-  //     status: 'PROCESSING'
-  //   },
-  //   {
-  //     blockchain: 'Flow',
-  //     taskName: 'phantabear',
-  //     taskId: 998766719,
-  //     createTime: 0,
-  //     status: 'PROCESSING'
-  //   },
-  //   {
-  //     blockchain: 'BTC',
-  //     taskName: 'BYC-task',
-  //     taskId: 998766719,
-  //     createTime: 0,
-  //     status: 'FAILURE'
-  //   },
-  //   {
-  //     blockchain: 'Ethereum',
-  //     taskName: 'spork13-reverse',
-  //     taskId: 998766719,
-  //     createTime: 0,
-  //     status: 'PROCESSING'
-  //   },
-  //   {
-  //     blockchain: 'Flow',
-  //     taskName: 'phantabear',
-  //     taskId: 998766719,
-  //     createTime: 0,
-  //     status: 'PROCESSING'
-  //   },
-  //   {
-  //     blockchain: 'BTC',
-  //     taskName: 'BYC-task',
-  //     taskId: 998766719,
-  //     createTime: 0,
-  //     status: 'FAILURE'
-  //   },
-  //   {
-  //     blockchain: 'Ethereum',
-  //     taskName: 'spork13-reverse',
-  //     taskId: 998766719,
-  //     createTime: 0,
-  //     status: 'PROCESSING'
-  //   },
-  //   {
-  //     blockchain: 'Flow',
-  //     taskName: 'phantabear',
-  //     taskId: 998766719,
-  //     createTime: 0,
-  //     status: 'PROCESSING'
-  //   },
-  //   {
-  //     blockchain: 'BTC',
-  //     taskName: 'BYC-task',
-  //     taskId: 998766719,
-  //     createTime: 0,
-  //     status: 'FAILURE'
-  //   }
-  // ];
-
   const [
     { loading: getAdaptServicesLoading, value: adaptServicesData },
     getAdaptServices
@@ -152,7 +107,7 @@ function AdapterServices(props: adapterServicesProps) {
   return (
     <div className={cn(className)}>
       <div className="text-[24px] font-[600] capitalize text-[#2483FF] ">
-        Adapter Services
+        Data Adapter Jobs
       </div>
 
       <Spin spinning={status === 'loading'} tip="downloading">
@@ -162,7 +117,8 @@ function AdapterServices(props: adapterServicesProps) {
             columns={columns}
             dataSource={adaptServicesData}
             loading={getAdaptServicesLoading}
-            pagination={false}
+            // pagination={false}
+            onChange={handleChange}
           />
         </div>
       </Spin>

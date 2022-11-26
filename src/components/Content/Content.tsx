@@ -13,8 +13,6 @@ export function Content(props: ContentProps) {
 
   const { data, isLoading } = useQuery('getWeather', getWeather);
 
-  console.log('data', data);
-
   return (
     <div className={cn(styles.Content, className)}>
       {!isLoading && data?.city}

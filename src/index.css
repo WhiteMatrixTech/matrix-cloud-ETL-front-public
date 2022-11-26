@@ -31,6 +31,10 @@
   border-bottom: 0px !important;
 }
 
+.ant-table-filter-trigger {
+  color: #ffffff !important;
+}
+
 .ant-popover-arrow {
   display: none !important;
 }
@@ -72,6 +76,14 @@
 .ant-modal-content .ant-btn-default:hover {
   color: #2483ff !important;
   border-color: #2483ff !important;
+}
+.ant-select-selector {
+  height: 40px !important;
+}
+
+.ant-select-selection-item {
+  display: flex;
+  align-items: center;
 }
 
 ::-webkit-scrollbar {
