@@ -47,7 +47,7 @@ function Blocks(props: blockProps) {
       render: (_, data) => {
         return (
           <div className="">
-            {dayjs(Number(data.timestamp)).format('YYYY-MM-DD hh:mm:ss')}
+            {dayjs(Number(data.timestamp)).format('YYYY-MM-DD hh:mm:ss [Z] A')}
           </div>
         );
       }

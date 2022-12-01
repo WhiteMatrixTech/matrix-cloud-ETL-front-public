@@ -5,6 +5,7 @@ import { Select, Spin, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import cn from 'classnames';
 import React, { useEffect, useMemo, useState } from 'react';
+import { JSONTree } from 'react-json-tree';
 import { useAsyncFn } from 'react-use';
 
 import {
@@ -32,6 +33,27 @@ interface TokenDataColumnsType {
 interface TokenMetadataRaw {
   [key: string]: any;
 }
+
+const theme = {
+  scheme: 'monokai',
+  author: 'wimer hazenberg (http://www.monokai.nl)',
+  base00: '#272822',
+  base01: '#383830',
+  base02: '#49483e',
+  base03: '#75715e',
+  base04: '#a59f85',
+  base05: '#f8f8f2',
+  base06: '#f5f4f1',
+  base07: '#f9f8f5',
+  base08: '#f92672',
+  base09: '#fd971f',
+  base0A: '#f4bf75',
+  base0B: '#a6e22e',
+  base0C: '#a1efe4',
+  base0D: '#66d9ef',
+  base0E: '#ae81ff',
+  base0F: '#cc6633'
+};
 
 export function TokenDataExplorer(props: TokenDataExplorerProps) {
   const { className } = props;
@@ -72,7 +94,17 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       title: 'Image',
       dataIndex: 'image',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base',
+      render: (_, data) => {
+        if (data.image === 'null') {
+          return <div>{data.image}</div>;
+        }
+        return (
+          <div>
+            <img src={data.image} />
+          </div>
+        );
+      }
     },
     {
       title: 'Description',
@@ -84,7 +116,21 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       title: 'Attributes',
       dataIndex: 'attributes',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base w-[20%]'
+      className: 'text-[#000000d9] text-base w-[20%]',
+      render: (_, data) => {
+        return (
+          <JSONTree
+            data={JSON.parse(data.attributes)}
+            theme={{
+              extend: theme
+              // underline keys for literal values
+              // valueLabel: {
+              //   textDecoration: 'underline'
+              // }
+            }}
+          />
+        );
+      }
     }
   ];
 

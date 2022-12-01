@@ -1,8 +1,7 @@
-import { SearchOutlined } from '@ant-design/icons';
-import { Select, Spin } from 'antd';
+import { Spin } from 'antd';
 import Table, { ColumnsType } from 'antd/lib/table';
 import cn from 'classnames';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAsyncFn } from 'react-use';
 
@@ -68,18 +67,18 @@ function Events(props: eventsProps) {
     }
   ];
 
-  const mokeData = [
-    {
-      transactionHash:
-        '0xa5b284c4cf5b8157f84f79b39404e8dba427e5ed823aa3afbeebb69b178387e7',
-      blockNumber: 15050021,
-      topics: [
-        '"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef","0x00000000000000000000000088e6a0c2ddd26feeb64f039a2c41296fcb3f5640","0x000000000000000000000000beefbabeea323f07c59926295205d3b7a17e8638"'
-      ],
-      address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-      data: '0x00000000000000000000000000000000000000000000000789b799961a079869'
-    }
-  ];
+  // const mokeData = [
+  //   {
+  //     transactionHash:
+  //       '0xa5b284c4cf5b8157f84f79b39404e8dba427e5ed823aa3afbeebb69b178387e7',
+  //     blockNumber: 15050021,
+  //     topics: [
+  //       '"0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef","0x00000000000000000000000088e6a0c2ddd26feeb64f039a2c41296fcb3f5640","0x000000000000000000000000beefbabeea323f07c59926295205d3b7a17e8638"'
+  //     ],
+  //     address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+  //     data: '0x00000000000000000000000000000000000000000000000789b799961a079869'
+  //   }
+  // ];
 
   const [{ loading: getEventsLoading, value: eventsData }, getEventsServices] =
     useAsyncFn(async () => {

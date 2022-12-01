@@ -6,6 +6,8 @@ interface TaskDataRes {
   status: string;
   taskId: number;
   taskName: string;
+  taskType: string;
+  blockNumber: number;
 }
 
 export interface AppsDataRes {
@@ -18,6 +20,7 @@ interface EventHandlersDataRes {
   blockchain: string;
   handlerName: string;
   type: string;
+  kafkaTopic: string;
 }
 
 export const getTaskData = () => {

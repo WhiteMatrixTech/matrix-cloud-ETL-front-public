@@ -15,9 +15,10 @@ interface adapterServicesProps {
 interface columnsType {
   blockchain: string;
   taskName: string;
-  taskId: number;
   createTime: number;
   status: string;
+  taskType: string;
+  blockNumber: number;
 }
 
 function AdapterServices(props: adapterServicesProps) {
@@ -40,25 +41,43 @@ function AdapterServices(props: adapterServicesProps) {
       ellipsis: true,
       filters: [
         { text: 'Flow', value: 'flow' },
-        { text: 'Ethereum', value: 'ethereum' }
+        { text: 'Ethereum', value: 'ethereum' },
+        { text: 'Polygon', value: 'polygon' },
+        { text: 'BSC', value: 'bsc' }
       ],
       filteredValue: filteredInfo.blockchain || null,
       onFilter: (value, record) => {
         return record.blockchain === value;
       },
-      className: 'text-[#000000] font-[700] text-base capitalize'
+      className: 'text-[#000000] font-[700] text-base capitalize',
+      render: (_, data) => {
+        if (data.blockchain === 'bsc') {
+          return <div>BSC</div>;
+        } else {
+          return <div>{data.blockchain}</div>;
+        }
+      }
     },
     {
-      title: 'Task Name',
+      title: 'TaskName',
       dataIndex: 'taskName',
       ellipsis: true,
       className: 'text-[#000000d9] text-base w-[40%]'
     },
     {
-      title: 'TaskId',
-      dataIndex: 'taskId',
+      title: 'TaskType',
+      dataIndex: 'taskType',
       ellipsis: true,
       className: 'text-[#000000d9] text-base'
+    },
+    {
+      title: 'BlockNumber',
+      dataIndex: 'blockNumber',
+      ellipsis: true,
+      className: 'text-[#000000d9] text-base',
+      render: (_, data) => {
+        return <div>{data.blockNumber || 'null'}</div>;
+      }
     },
     {
       title: 'CreateTime',
@@ -68,7 +87,7 @@ function AdapterServices(props: adapterServicesProps) {
       render: (_, data) => {
         return (
           <div className="">
-            {dayjs(Number(data.createTime)).format('YYYY-MM-DD hh:mm:ss')}
+            {dayjs(Number(data.createTime)).format('YYYY-MM-DD hh:mm:ss [Z] A')}
           </div>
         );
       }

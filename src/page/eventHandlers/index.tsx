@@ -14,6 +14,7 @@ interface dataStoreProps {
 interface columnsType {
   blockchain: string;
   handlerName: string;
+  kafkaTopic: string;
   type: string;
 }
 
@@ -38,17 +39,23 @@ function EventHandlers(props: dataStoreProps) {
       filters: [
         { text: 'Flow', value: 'flow' },
         { text: 'Ethereum', value: 'ethereum' },
-        { text: 'BTC', value: 'btc' }
+        { text: 'Polygon', value: 'polygon' }
       ],
       filteredValue: filteredInfo.blockchain || null,
       onFilter: (value, record) => {
         return record.blockchain === value;
       },
-      className: 'text-[#000000] font-[700] text-base w-[20%] capitalize'
+      className: 'text-[#000000] font-[700] text-base w-[15%] capitalize'
     },
     {
-      title: 'Handler Name',
+      title: 'HandlerName',
       dataIndex: 'handlerName',
+      ellipsis: true,
+      className: 'text-[#000000d9] text-base'
+    },
+    {
+      title: 'Topic',
+      dataIndex: 'kafkaTopic',
       ellipsis: true,
       className: 'text-[#000000d9] text-base'
     },
@@ -56,7 +63,7 @@ function EventHandlers(props: dataStoreProps) {
       title: 'Type',
       dataIndex: 'type',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base w-[20%]'
+      className: 'text-[#000000d9] text-base w-[15%]'
     }
   ];
 

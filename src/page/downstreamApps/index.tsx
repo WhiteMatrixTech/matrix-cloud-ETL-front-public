@@ -37,8 +37,7 @@ function DownstreamApps(props: downstreamAppsProps) {
       ellipsis: true,
       filters: [
         { text: 'Flow', value: 'flow' },
-        { text: 'Ethereum', value: 'ethereum' },
-        { text: 'BTC', value: 'btc' }
+        { text: 'Ethereum', value: 'ethereum' }
       ],
       filteredValue: filteredInfo.blockchain || null,
       onFilter: (value, record) => {
@@ -63,7 +62,7 @@ function DownstreamApps(props: downstreamAppsProps) {
             {handlers.map((item, index) => (
               <div key={index} className="m-[5px] text-[#000000d9]">
                 {item}
-                {index >= handlers.length - 1 ? '' : '、'}
+                {index >= handlers.length - 1 ? '' : ','}
               </div>
             ))}
           </div>
