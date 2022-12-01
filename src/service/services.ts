@@ -127,11 +127,18 @@ export const getTransactionData = (params: TransactionReq) => {
   );
 };
 
+interface MetadataType {
+  name: string;
+  image: string;
+  description: string | null;
+  attributes: string | null;
+}
+
 export interface ethTokenDataRes {
   address: string;
   owner: string;
   tokenId: string;
-  tokenMetadataRaw: string;
+  metadata: MetadataType;
   tokenMetadataURI: string;
 }
 
@@ -164,6 +171,7 @@ export interface flowTokenDataRes {
   address: string;
   owner: string;
   tokenId: string;
+  metadata: MetadataType;
   tokenMetadataRaw: string;
   tokenMetadataURI: string;
 }

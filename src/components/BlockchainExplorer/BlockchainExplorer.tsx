@@ -184,6 +184,9 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       ellipsis: true,
       className: 'text-[#000000d9] text-base w-[25%]',
       render: (_, data) => {
+        if (!data.topics) {
+          return <div>N/A</div>;
+        }
         return (
           <div>
             {data.topics.map((item, index) => (

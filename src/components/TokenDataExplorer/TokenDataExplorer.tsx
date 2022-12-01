@@ -20,18 +20,18 @@ interface TokenDataExplorerProps {
   className?: string;
 }
 
-interface TokenDataColumnsType {
-  contractAddress: string;
-  tokenId: string;
-  owner: string;
+interface MetadataType {
   name: string;
   image: string;
-  description: string;
-  attributes: string;
+  description: string | null;
+  attributes: string | null;
 }
 
-interface TokenMetadataRaw {
-  [key: string]: any;
+interface TokenDataColumnsType {
+  address: string;
+  tokenId: string;
+  owner: string;
+  metadata: MetadataType;
 }
 
 const theme = {
@@ -70,11 +70,11 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       ellipsis: true,
       className: 'text-[#000000] font-[700] text-base',
       sorter: {
-        compare: (a, b) => a.contractAddress.localeCompare(b.contractAddress),
+        compare: (a, b) => a.address.localeCompare(b.address),
         multiple: 2
       },
       render: (_, data) => {
-        return <div>{data.contractAddress.split('-')[1]}</div>;
+        return <div>{data.address.split('-')[1]}</div>;
       }
     },
     {
@@ -95,9 +95,15 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
     },
     {
       title: 'Name',
-      dataIndex: 'name',
+      dataIndex: 'tokenName',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base',
+      render: (_, data) => {
+        if (!data.metadata.name) {
+          return <div>N/A</div>;
+        }
+        return <div>{data.metadata.name}</div>;
+      }
     },
     {
       title: 'Image',
@@ -105,12 +111,12 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       ellipsis: true,
       className: 'text-[#000000d9] text-base',
       render: (_, data) => {
-        if (data.image === 'N/A') {
-          return <div>{data.image}</div>;
+        if (!data.metadata.image || data.metadata.image.includes('ipfs')) {
+          return <div>N/A</div>;
         }
         return (
           <div className="w-[120px]">
-            <img src={data.image} />
+            <img src={data.metadata.image} />
           </div>
         );
       }
@@ -119,7 +125,13 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       title: 'Description',
       dataIndex: 'description',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base w-[20%]'
+      className: 'text-[#000000d9] text-base w-[20%]',
+      render: (_, data) => {
+        if (!data.metadata.description) {
+          return <div>N/A</div>;
+        }
+        return <div>{data.metadata.description}</div>;
+      }
     },
     {
       title: 'Attributes',
@@ -127,12 +139,12 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       ellipsis: true,
       className: 'text-[#000000d9] text-base w-[20%]',
       render: (_, data) => {
-        if (data.attributes === 'N/A') {
-          return <div>{data.attributes}</div>;
+        if (!data.metadata.attributes) {
+          return <div>N/A</div>;
         }
         return (
           <JSONTree
-            data={JSON.parse(data.attributes)}
+            data={JSON.parse(data.metadata.attributes || '')}
             theme={{
               extend: theme
               // underline keys for literal values
@@ -151,6 +163,7 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
     getEthTokenDataServices
   ] = useAsyncFn(async (address?: string, owner?: string, tokenId?: string) => {
     let response: { tokens: ethTokenDataRes[] };
+
     if (owner) {
       response = await getEthTokenDataByOwner(owner);
     } else if (tokenId) {
@@ -158,35 +171,15 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
     } else {
       response = await getEthTokenData({ address });
     }
+    // response.tokens.splice(30, 10);
 
-    const data: TokenDataColumnsType[] = [];
-
-    response.tokens.forEach((item) => {
-      const tokenMetadataRaw = JSON.parse(
-        item.tokenMetadataRaw
-      ) as TokenMetadataRaw;
-
-      data.push({
-        contractAddress: item.address,
-        tokenId: item.tokenId,
-        owner: item.owner,
-        name: tokenMetadataRaw.name || 'N/A',
-        image: tokenMetadataRaw.image || 'N/A',
-        description: tokenMetadataRaw.description || 'N/A',
-        attributes: JSON.stringify(tokenMetadataRaw.attributes) || 'N/A'
-      });
-    });
-
-    return data.sort((a, b) =>
-      a.contractAddress.localeCompare(b.contractAddress)
-    );
+    return response.tokens; // .sort((a, b) => a.address.localeCompare(b.address));
   });
 
   const [
     { loading: getFlowTokenDataLoading, value: flowTokenData },
     getFlowTokenDataServices
   ] = useAsyncFn(async (address?: string, owner?: string, tokenId?: string) => {
-    // const response = await getFlowTokenData({});
     let response: { tokens: ethTokenDataRes[] };
     if (owner) {
       response = await getFlowTokenDataByOwner(owner);
@@ -196,25 +189,7 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       response = await getFlowTokenData({ address });
     }
 
-    const data: TokenDataColumnsType[] = [];
-
-    response.tokens.forEach((item) => {
-      const tokenMetadataRaw = JSON.parse(
-        item.tokenMetadataRaw
-      ) as TokenMetadataRaw;
-
-      data.push({
-        contractAddress: item.address,
-        tokenId: item.tokenId,
-        owner: item.owner,
-        name: tokenMetadataRaw.name || 'N/A',
-        image: tokenMetadataRaw.image || 'N/A',
-        description: tokenMetadataRaw.description || 'N/A',
-        attributes: JSON.stringify(tokenMetadataRaw.attributes) || 'N/A'
-      });
-    });
-
-    return data;
+    return response.tokens; // .sort((a, b) => a.address.localeCompare(b.address));
   });
 
   const tableData = useMemo(() => {
@@ -325,7 +300,7 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       <Spin spinning={status === 'loading'} tip="downloading">
         <div className={cn(className, 'pt-10 font-Roboto')}>
           <Table
-            rowKey="userId"
+            rowKey="tokenId"
             columns={Columns}
             dataSource={tableData}
             loading={getEthTokenDataLoading || getFlowTokenDataLoading}
