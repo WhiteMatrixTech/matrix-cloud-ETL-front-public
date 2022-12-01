@@ -16,6 +16,7 @@ interface columnsType {
   handlerName: string;
   kafkaTopic: string;
   type: string;
+  appName: string;
 }
 
 function EventHandlers(props: dataStoreProps) {
@@ -41,11 +42,24 @@ function EventHandlers(props: dataStoreProps) {
         { text: 'Ethereum', value: 'ethereum' },
         { text: 'Polygon', value: 'polygon' }
       ],
+      sorter: {
+        compare: (a, b) => a.blockchain.length - b.blockchain.length,
+        multiple: 1
+      },
       filteredValue: filteredInfo.blockchain || null,
       onFilter: (value, record) => {
         return record.blockchain === value;
       },
       className: 'text-[#000000] font-[700] text-base w-[15%] capitalize'
+    },
+    {
+      title: 'App',
+      dataIndex: 'appName',
+      ellipsis: true,
+      className: 'text-[#000000d9] text-base',
+      render: (_, data) => {
+        return <div>{data.appName || 'N/A'}</div>;
+      }
     },
     {
       title: 'HandlerName',
@@ -73,7 +87,9 @@ function EventHandlers(props: dataStoreProps) {
   ] = useAsyncFn(async () => {
     const response = await getEventHandlersData();
 
-    return response.handlers;
+    return response.handlers.sort(
+      (a, b) => b.blockchain.length - a.blockchain.length
+    );
   });
 
   useEffect(() => {

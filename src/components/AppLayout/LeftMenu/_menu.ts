@@ -15,12 +15,12 @@ export const MenuList: MenuItem[] = [
     label: 'Event Handlers',
     key: '/event-handlers'
   },
+  // {
+  //   label: 'Downstream Apps',
+  //   key: '/downstream-apps'
+  // },
   {
-    label: 'Downstream Apps',
-    key: '/downstream-apps'
-  },
-  {
-    label: 'Data Store',
+    label: 'Data Stores',
     key: '/data-store'
   }
 ];

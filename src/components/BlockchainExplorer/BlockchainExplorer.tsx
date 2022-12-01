@@ -50,7 +50,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
 
   const blockColumns: ColumnsType<BlockColumnsType> = [
     {
-      title: 'Block Number',
+      title: 'BlockNumber',
       dataIndex: 'blockNumber',
       ellipsis: true,
       className: 'text-[#000000] font-[700] text-base capitalize'
@@ -65,7 +65,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
           return <div>{data.size}</div>;
         }
 
-        return <div>null</div>;
+        return <div>N/A</div>;
       }
     },
     {
@@ -75,14 +75,12 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       className: 'text-[#000000d9] text-base',
       render: (_, data) => {
         return (
-          <div className="">
-            {dayjs(Number(data.timestamp)).format('YYYY-MM-DD hh:mm:ss [Z] A')}
-          </div>
+          <div className="">{dayjs(Number(data.timestamp)).toISOString()}</div>
         );
       }
     },
     {
-      title: 'Gas Used',
+      title: 'GasUsed',
       dataIndex: 'gasUsed',
       ellipsis: true,
       className: 'text-[#000000d9] text-base',
@@ -91,11 +89,11 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
           return <div>{data.gasUsed}</div>;
         }
 
-        return <div>null</div>;
+        return <div>N/A</div>;
       }
     },
     {
-      title: 'Transaction Count',
+      title: 'TransactionCount',
       dataIndex: 'transactionCount',
       ellipsis: true,
       className: 'text-[#000000d9] text-base',
@@ -111,13 +109,13 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
 
   const transactionColumns: ColumnsType<TransactionColumnsType> = [
     {
-      title: 'Txn Hash',
+      title: 'TxnHash',
       dataIndex: 'transactionHash',
       ellipsis: true,
       className: 'text-[#000000d9] text-base w-[20%]'
     },
     {
-      title: 'Block Number',
+      title: 'BlockNumber',
       dataIndex: 'blockNumber',
       ellipsis: true,
       className: 'text-[#000000] font-[700] text-base capitalize'
@@ -129,9 +127,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       className: 'text-[#000000d9] text-base',
       render: (_, data) => {
         return (
-          <div className="">
-            {dayjs(Number(data.timestamp)).format('YYYY-MM-DD hh:mm:ss [Z] A')}
-          </div>
+          <div className="">{dayjs(Number(data.timestamp)).toISOString()}</div>
         );
       }
     },
@@ -145,7 +141,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
           return <div>{data.from}</div>;
         }
 
-        return <div>null</div>;
+        return <div>N/A</div>;
       }
     },
 
@@ -159,7 +155,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
           return <div>{data.to}</div>;
         }
 
-        return <div>null</div>;
+        return <div>N/A</div>;
       }
     },
     {
@@ -174,7 +170,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       className: 'text-[#000000d9] text-base',
       render: (_, data) => {
         if (selectedChain === 'flow') {
-          return <div>{data.value || 'null'}</div>;
+          return <div>{data.value || 'N/A'}</div>;
         }
         return <div>{data.value / 1e18}</div>;
       }
@@ -193,7 +189,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
             {data.topics.map((item, index) => (
               <div key={index} className="m-[5px] text-[#000000d9]">
                 {`"${item}"`}
-                {index >= data.topics.length - 1 ? '' : '、'}
+                {index >= data.topics.length - 1 ? '' : ','}
               </div>
             ))}
           </div>
@@ -201,7 +197,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       }
     },
     {
-      title: 'Txn Hash',
+      title: 'TxnHash',
       dataIndex: 'transactionHash',
       ellipsis: true,
       className: 'text-[#000000d9] text-base'
@@ -213,7 +209,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       className: 'text-[#000000d9] text-base'
     },
     {
-      title: 'Block Number',
+      title: 'BlockNumber',
       dataIndex: 'blockNumber',
       ellipsis: true,
       className: 'text-[#000000] font-[700] text-base w-[15%]'

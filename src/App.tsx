@@ -10,6 +10,7 @@ import DataStore from './page/dataStore';
 import DownstreamApps from './page/downstreamApps';
 import EventHandlers from './page/eventHandlers';
 import Events from './page/events';
+import TaskDetail from './page/taskDetail';
 import Transactions from './page/transactions';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           element={<Navigate to="/adapter-services" replace={true} />}
         />
         <Route path="/adapter-services" element={<AdapterServices />} />
+        <Route path="/adapter-services/taskDetail" element={<TaskDetail />} />
         <Route path="/event-handlers" element={<EventHandlers />} />
         <Route path="/downstream-apps" element={<DownstreamApps />} />
         <Route path="/data-store" element={<DataStore />} />

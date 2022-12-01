@@ -21,12 +21,31 @@ interface EventHandlersDataRes {
   handlerName: string;
   type: string;
   kafkaTopic: string;
+  appName: string;
 }
 
 export const getTaskData = () => {
   return getData<null, { tasks: TaskDataRes[] }>(
     '/etl/api/v1/blockchain/tasks',
     null,
+    {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  );
+};
+
+interface TaskLogDataRes {
+  createTime: number;
+  lastExecuteTime: number;
+  status: string;
+  taskId: number;
+  taskName: string;
+}
+
+export const getTaskLogData = (taskName: string) => {
+  return getData<{ taskName: string }, { tasks: TaskLogDataRes[] }>(
+    '/etl/api/v1/blockchain/taskLogs',
+    { taskName },
     {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -118,7 +137,7 @@ export interface ethTokenDataRes {
 
 interface ethTokenDataReq {
   address?: string;
-  tokenId?: number;
+  tokenId?: string;
 }
 
 export const getEthTokenData = (params: ethTokenDataReq) => {
@@ -151,7 +170,7 @@ export interface flowTokenDataRes {
 
 interface flowTokenDataReq {
   address?: string;
-  tokenId?: number;
+  tokenId?: string;
 }
 
 export const getFlowTokenData = (params: flowTokenDataReq) => {

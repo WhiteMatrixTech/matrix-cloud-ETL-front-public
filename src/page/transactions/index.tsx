@@ -29,13 +29,13 @@ function Transactions(props: transactionProps) {
 
   const Columns: ColumnsType<TransactionColumnsType> = [
     {
-      title: 'Txn Hash',
+      title: 'TxnHash',
       dataIndex: 'transactionHash',
       ellipsis: true,
       className: 'text-[#000000d9] text-base w-[20%]'
     },
     {
-      title: 'Block Number',
+      title: 'BlockNumber',
       dataIndex: 'blockNumber',
       ellipsis: true,
       className: 'text-[#000000] font-[700] text-base capitalize'
@@ -47,9 +47,7 @@ function Transactions(props: transactionProps) {
       className: 'text-[#000000d9] text-base',
       render: (_, data) => {
         return (
-          <div className="">
-            {dayjs(Number(data.timestamp)).format('YYYY-MM-DD hh:mm:ss [Z] A')}
-          </div>
+          <div className="">{dayjs(Number(data.timestamp)).toISOString()}</div>
         );
       }
     },
@@ -62,7 +60,7 @@ function Transactions(props: transactionProps) {
         if (data.from) {
           return <div>{data.from}</div>;
         }
-        return <div>null</div>;
+        return <div>N/A</div>;
       }
     },
 
@@ -75,7 +73,7 @@ function Transactions(props: transactionProps) {
         if (data.to) {
           return <div>{data.to}</div>;
         }
-        return <div>null</div>;
+        return <div>N/A</div>;
       }
     },
     {
@@ -90,7 +88,7 @@ function Transactions(props: transactionProps) {
       className: 'text-[#000000d9] text-base',
       render: (_, data) => {
         if (selectedChain === 'flow') {
-          return <div>{data.value || 'null'}</div>;
+          return <div>{data.value || 'N/A'}</div>;
         }
         return <div>{data.value / 1e18}</div>;
       }

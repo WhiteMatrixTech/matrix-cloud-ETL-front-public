@@ -4,6 +4,7 @@ import { FilterValue } from 'antd/lib/table/interface';
 import cn from 'classnames';
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAsyncFn } from 'react-use';
 
 import { getTaskData } from '@/service/services';
@@ -49,6 +50,10 @@ function AdapterServices(props: adapterServicesProps) {
       onFilter: (value, record) => {
         return record.blockchain === value;
       },
+      sorter: {
+        compare: (a, b) => a.blockchain.length - b.blockchain.length,
+        multiple: 1
+      },
       className: 'text-[#000000] font-[700] text-base capitalize',
       render: (_, data) => {
         if (data.blockchain === 'bsc') {
@@ -62,7 +67,14 @@ function AdapterServices(props: adapterServicesProps) {
       title: 'TaskName',
       dataIndex: 'taskName',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base w-[40%]'
+      className: 'text-[#000000d9] text-base w-[30%]',
+      render: (_, data) => {
+        return (
+          <Link to={`/adapter-services/taskDetail?taskName=${data.taskName}`}>
+            {data.taskName}
+          </Link>
+        );
+      }
     },
     {
       title: 'TaskType',
@@ -76,19 +88,17 @@ function AdapterServices(props: adapterServicesProps) {
       ellipsis: true,
       className: 'text-[#000000d9] text-base',
       render: (_, data) => {
-        return <div>{data.blockNumber || 'null'}</div>;
+        return <div>{data.blockNumber || 'N/A'}</div>;
       }
     },
     {
       title: 'CreateTime',
       dataIndex: 'createTime',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base',
+      className: 'text-[#000000d9] text-base w-[20%]',
       render: (_, data) => {
         return (
-          <div className="">
-            {dayjs(Number(data.createTime)).format('YYYY-MM-DD hh:mm:ss [Z] A')}
-          </div>
+          <div className="">{dayjs(Number(data.createTime)).toISOString()}</div>
         );
       }
     },
@@ -99,8 +109,8 @@ function AdapterServices(props: adapterServicesProps) {
         return (
           <div
             className={cn(
-              'text-[14px] font-[700]',
-              data.status === 'FAILURE' ? 'text-[#EA6F6F]' : 'text-[#499F5F]'
+              'text-[18px] font-[700] uppercase',
+              data.status === 'paused' ? 'text-[#FF7800]' : 'text-[#499F5F]'
             )}
           >
             {data.status}
@@ -116,7 +126,9 @@ function AdapterServices(props: adapterServicesProps) {
   ] = useAsyncFn(async () => {
     const response = await getTaskData();
 
-    return response.tasks;
+    return response.tasks.sort(
+      (a, b) => b.blockchain.length - a.blockchain.length
+    );
   });
 
   useEffect(() => {

@@ -59,15 +59,20 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
   const { className } = props;
   const [selectedChain, setSelectedChain] = useState<string>('ethereum');
   const [searchValue, setSearchValue] = useState<string>('');
+  const [searchByTokenId, setSearchByTokenId] = useState<string>('');
   const [selectedSearch, setSelectedSearch] =
     useState<string>('Contract Address');
 
   const Columns: ColumnsType<TokenDataColumnsType> = [
     {
-      title: 'Contract Address',
+      title: 'ContractAddress',
       dataIndex: 'contractAddress',
       ellipsis: true,
       className: 'text-[#000000] font-[700] text-base',
+      sorter: {
+        compare: (a, b) => a.contractAddress.localeCompare(b.contractAddress),
+        multiple: 2
+      },
       render: (_, data) => {
         return <div>{data.contractAddress.split('-')[1]}</div>;
       }
@@ -76,7 +81,11 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       title: 'TokenId',
       dataIndex: 'tokenId',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base w-[8%]'
+      className: 'text-[#000000d9] text-base w-[8%]',
+      sorter: {
+        compare: (a, b) => Number(a.tokenId) - Number(b.tokenId),
+        multiple: 1
+      }
     },
     {
       title: 'Owner',
@@ -96,11 +105,11 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       ellipsis: true,
       className: 'text-[#000000d9] text-base',
       render: (_, data) => {
-        if (data.image === 'null') {
+        if (data.image === 'N/A') {
           return <div>{data.image}</div>;
         }
         return (
-          <div>
+          <div className="w-[120px]">
             <img src={data.image} />
           </div>
         );
@@ -118,6 +127,9 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       ellipsis: true,
       className: 'text-[#000000d9] text-base w-[20%]',
       render: (_, data) => {
+        if (data.attributes === 'N/A') {
+          return <div>{data.attributes}</div>;
+        }
         return (
           <JSONTree
             data={JSON.parse(data.attributes)}
@@ -137,10 +149,12 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
   const [
     { loading: getEthTokenDataLoading, value: ethTokenData },
     getEthTokenDataServices
-  ] = useAsyncFn(async (address?: string, owner?: string) => {
+  ] = useAsyncFn(async (address?: string, owner?: string, tokenId?: string) => {
     let response: { tokens: ethTokenDataRes[] };
     if (owner) {
       response = await getEthTokenDataByOwner(owner);
+    } else if (tokenId) {
+      response = await getEthTokenData({ address, tokenId });
     } else {
       response = await getEthTokenData({ address });
     }
@@ -156,24 +170,28 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
         contractAddress: item.address,
         tokenId: item.tokenId,
         owner: item.owner,
-        name: tokenMetadataRaw.name || 'null',
-        image: tokenMetadataRaw.image || 'null',
-        description: tokenMetadataRaw.description || 'null',
-        attributes: JSON.stringify(tokenMetadataRaw.attributes) || 'null'
+        name: tokenMetadataRaw.name || 'N/A',
+        image: tokenMetadataRaw.image || 'N/A',
+        description: tokenMetadataRaw.description || 'N/A',
+        attributes: JSON.stringify(tokenMetadataRaw.attributes) || 'N/A'
       });
     });
 
-    return data;
+    return data.sort((a, b) =>
+      a.contractAddress.localeCompare(b.contractAddress)
+    );
   });
 
   const [
     { loading: getFlowTokenDataLoading, value: flowTokenData },
     getFlowTokenDataServices
-  ] = useAsyncFn(async (address?: string, owner?: string) => {
+  ] = useAsyncFn(async (address?: string, owner?: string, tokenId?: string) => {
     // const response = await getFlowTokenData({});
     let response: { tokens: ethTokenDataRes[] };
     if (owner) {
       response = await getFlowTokenDataByOwner(owner);
+    } else if (tokenId) {
+      response = await getFlowTokenData({ address, tokenId });
     } else {
       response = await getFlowTokenData({ address });
     }
@@ -189,10 +207,10 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
         contractAddress: item.address,
         tokenId: item.tokenId,
         owner: item.owner,
-        name: tokenMetadataRaw.name || 'null',
-        image: tokenMetadataRaw.image || 'null',
-        description: tokenMetadataRaw.description || 'null',
-        attributes: JSON.stringify(tokenMetadataRaw.attributes) || 'null'
+        name: tokenMetadataRaw.name || 'N/A',
+        image: tokenMetadataRaw.image || 'N/A',
+        description: tokenMetadataRaw.description || 'N/A',
+        attributes: JSON.stringify(tokenMetadataRaw.attributes) || 'N/A'
       });
     });
 
@@ -213,21 +231,25 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       void getFlowTokenDataServices();
       return;
     }
-    if (selectedSearch === 'Contract Address') {
-      void getEthTokenDataServices(searchValue);
-      void getFlowTokenDataServices(searchValue);
-      return;
-    }
     if (selectedSearch === 'Owner') {
       void getEthTokenDataServices(undefined, searchValue);
       void getFlowTokenDataServices(undefined, searchValue);
+      return;
     }
+    if (selectedSearch === 'Contract Address' && searchByTokenId) {
+      void getEthTokenDataServices(searchValue, undefined, searchByTokenId);
+      void getFlowTokenDataServices(searchValue, undefined, searchByTokenId);
+      return;
+    }
+    void getEthTokenDataServices(searchValue);
+    void getFlowTokenDataServices(searchValue);
   }, [
     getEthTokenDataServices,
     getFlowTokenDataServices,
     selectedChain,
     searchValue,
-    selectedSearch
+    selectedSearch,
+    searchByTokenId
   ]);
 
   return (
@@ -278,6 +300,27 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
           onChange={(value: string) => setSelectedChain(value)}
         />
       </div>
+
+      {selectedSearch === 'Contract Address' && searchValue && (
+        <div className="mt-2 flex">
+          <div className="h-[40px] w-[159px] text-center text-[20px] leading-[40px] ">
+            TokenId:
+          </div>
+
+          <input
+            value={searchByTokenId}
+            placeholder={`Search by tokenId`}
+            className="h-10 w-[400px] border-[1px] border-[#D9D9D9] p-2 outline-none"
+            onChange={(e) => setSearchByTokenId(e.target.value)}
+          />
+          <div
+            className="flex h-10 w-11 items-center justify-center bg-[#1890FF] text-[#FFFFFF]"
+            style={{ boxShadow: '0px 2px 0px rgba(0, 0, 0, 0.043)' }}
+          >
+            <SearchOutlined />
+          </div>
+        </div>
+      )}
 
       <Spin spinning={status === 'loading'} tip="downloading">
         <div className={cn(className, 'pt-10 font-Roboto')}>

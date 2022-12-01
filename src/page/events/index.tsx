@@ -34,7 +34,7 @@ function Events(props: eventsProps) {
             {data.topics.map((item, index) => (
               <div key={index} className="m-[5px] text-[#000000d9]">
                 {`"${item}"`}
-                {index >= data.topics.length - 1 ? '' : '、'}
+                {index >= data.topics.length - 1 ? '' : ','}
               </div>
             ))}
           </div>
@@ -42,7 +42,7 @@ function Events(props: eventsProps) {
       }
     },
     {
-      title: 'Txn Hash',
+      title: 'TxnHash',
       dataIndex: 'transactionHash',
       ellipsis: true,
       className: 'text-[#000000d9] text-base'
@@ -54,7 +54,7 @@ function Events(props: eventsProps) {
       className: 'text-[#000000d9] text-base'
     },
     {
-      title: 'Block Number',
+      title: 'BlockNumber',
       dataIndex: 'blockNumber',
       ellipsis: true,
       className: 'text-[#000000] font-[700] text-base w-[15%]'

@@ -28,7 +28,7 @@ function Blocks(props: blockProps) {
 
   const Columns: ColumnsType<BlockColumnsType> = [
     {
-      title: 'Block Number',
+      title: 'BlockNumber',
       dataIndex: 'blockNumber',
       ellipsis: true,
       className: 'text-[#000000] font-[700] text-base capitalize'
@@ -37,7 +37,10 @@ function Blocks(props: blockProps) {
       title: 'Size',
       dataIndex: 'size',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base',
+      render: (_, data) => {
+        return <div>{data.size || 'N/A'}</div>;
+      }
     },
     {
       title: 'Timestamp',
@@ -46,20 +49,21 @@ function Blocks(props: blockProps) {
       className: 'text-[#000000d9] text-base',
       render: (_, data) => {
         return (
-          <div className="">
-            {dayjs(Number(data.timestamp)).format('YYYY-MM-DD hh:mm:ss [Z] A')}
-          </div>
+          <div className="">{dayjs(Number(data.timestamp)).toISOString()}</div>
         );
       }
     },
     {
-      title: 'Gas Used',
+      title: 'GasUsed',
       dataIndex: 'gasUsed',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base',
+      render: (_, data) => {
+        return <div>{data.gasUsed || 'N/A'}</div>;
+      }
     },
     {
-      title: 'Transaction Count',
+      title: 'TransactionCount',
       dataIndex: 'transactionCount',
       ellipsis: true,
       className: 'text-[#000000d9] text-base',
