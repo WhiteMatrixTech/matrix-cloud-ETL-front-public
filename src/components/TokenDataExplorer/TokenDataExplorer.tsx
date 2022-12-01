@@ -171,9 +171,7 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
     } else {
       response = await getEthTokenData({ address });
     }
-    // response.tokens.splice(30, 10);
-
-    return response.tokens; // .sort((a, b) => a.address.localeCompare(b.address));
+    return response.tokens.sort((a, b) => a.address.localeCompare(b.address));
   });
 
   const [
@@ -189,7 +187,7 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       response = await getFlowTokenData({ address });
     }
 
-    return response.tokens; // .sort((a, b) => a.address.localeCompare(b.address));
+    return response.tokens.sort((a, b) => a.address.localeCompare(b.address));
   });
 
   const tableData = useMemo(() => {

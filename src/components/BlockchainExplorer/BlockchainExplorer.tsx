@@ -179,6 +179,30 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
 
   const eventsColumns: ColumnsType<EventsColumnsType> = [
     {
+      title: 'TxnHash',
+      dataIndex: 'transactionHash',
+      ellipsis: true,
+      className: 'text-[#000000d9] text-base'
+    },
+    {
+      title: 'Contract',
+      dataIndex: 'address',
+      ellipsis: true,
+      className: 'text-[#000000d9] text-base'
+    },
+    {
+      title: 'BlockNumber',
+      dataIndex: 'blockNumber',
+      ellipsis: true,
+      className: 'text-[#000000] font-[700] text-base w-[15%]'
+    },
+    {
+      title: 'Data',
+      dataIndex: 'data',
+      ellipsis: true,
+      className: 'text-[#000000d9] text-base'
+    },
+    {
       title: 'Topics',
       dataIndex: 'topics',
       ellipsis: true,
@@ -198,30 +222,6 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
           </div>
         );
       }
-    },
-    {
-      title: 'TxnHash',
-      dataIndex: 'transactionHash',
-      ellipsis: true,
-      className: 'text-[#000000d9] text-base'
-    },
-    {
-      title: 'Address',
-      dataIndex: 'address',
-      ellipsis: true,
-      className: 'text-[#000000d9] text-base'
-    },
-    {
-      title: 'BlockNumber',
-      dataIndex: 'blockNumber',
-      ellipsis: true,
-      className: 'text-[#000000] font-[700] text-base w-[15%]'
-    },
-    {
-      title: 'Data',
-      dataIndex: 'data',
-      ellipsis: true,
-      className: 'text-[#000000d9] text-base'
     }
   ];
 
@@ -308,6 +308,10 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
             {
               value: 'ethereum',
               label: 'Ethereum'
+            },
+            {
+              value: 'polygon',
+              label: 'Polygon'
             },
             {
               value: 'flow',

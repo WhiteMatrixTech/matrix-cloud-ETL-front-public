@@ -25,27 +25,6 @@ function Events(props: eventsProps) {
 
   const Columns: ColumnsType<EventsColumnsType> = [
     {
-      title: 'Topics',
-      dataIndex: 'topics',
-      ellipsis: true,
-      className: 'text-[#000000d9] text-base w-[25%]',
-      render: (_, data) => {
-        if (!data.topics) {
-          return <div>N/A</div>;
-        }
-        return (
-          <div>
-            {data.topics.map((item, index) => (
-              <div key={index} className="m-[5px] text-[#000000d9]">
-                {`"${item}"`}
-                {index >= data.topics.length - 1 ? '' : ','}
-              </div>
-            ))}
-          </div>
-        );
-      }
-    },
-    {
       title: 'TxnHash',
       dataIndex: 'transactionHash',
       ellipsis: true,
@@ -58,7 +37,7 @@ function Events(props: eventsProps) {
       }
     },
     {
-      title: 'Address',
+      title: 'Contract',
       dataIndex: 'address',
       ellipsis: true,
       className: 'text-[#000000d9] text-base',
@@ -91,6 +70,27 @@ function Events(props: eventsProps) {
           return <div>N/A</div>;
         }
         return <div>{data.data}</div>;
+      }
+    },
+    {
+      title: 'Topics',
+      dataIndex: 'topics',
+      ellipsis: true,
+      className: 'text-[#000000d9] text-base w-[25%]',
+      render: (_, data) => {
+        if (!data.topics) {
+          return <div>N/A</div>;
+        }
+        return (
+          <div>
+            {data.topics.map((item, index) => (
+              <div key={index} className="m-[5px] text-[#000000d9]">
+                {`"${item}"`}
+                {index >= data.topics.length - 1 ? '' : ','}
+              </div>
+            ))}
+          </div>
+        );
       }
     }
   ];
@@ -141,6 +141,10 @@ function Events(props: eventsProps) {
           {
             value: 'ethereum',
             label: 'Ethereum'
+          },
+          {
+            value: 'polygon',
+            label: 'Polygon'
           },
           {
             value: 'flow',

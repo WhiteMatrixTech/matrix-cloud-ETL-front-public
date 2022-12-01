@@ -149,6 +149,10 @@ function Transactions(props: transactionProps) {
               label: 'Ethereum'
             },
             {
+              value: 'polygon',
+              label: 'Polygon'
+            },
+            {
               value: 'flow',
               label: 'Flow'
             },

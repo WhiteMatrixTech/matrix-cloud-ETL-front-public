@@ -135,6 +135,10 @@ function Blocks(props: blockProps) {
               label: 'Ethereum'
             },
             {
+              value: 'polygon',
+              label: 'Polygon'
+            },
+            {
               value: 'flow',
               label: 'Flow'
             },
