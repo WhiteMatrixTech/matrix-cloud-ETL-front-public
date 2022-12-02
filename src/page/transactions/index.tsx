@@ -28,7 +28,9 @@ interface TransactionColumnsType {
 
 function Transactions(props: transactionProps) {
   const { className } = props;
-  const blockNumberParam = useSearchParam('blockNumber');
+
+  const blockChainParam = useSearchParam('blockchain');
+
   const [selectedChain, setSelectedChain] = useState<string>('ethereum');
   const [searchValue, setSearchValue] = useState<string>('');
 
@@ -112,10 +114,10 @@ function Transactions(props: transactionProps) {
       return [response];
     }
 
-    if (blockNumberParam) {
+    if (blockChainParam) {
       const response = await getTransactionData({
         chainType,
-        blockNumber: Number(blockNumberParam)
+        blockNumber: Number(blockChainParam.split('?blockNumber=')[1])
       });
 
       return response.transactions;
@@ -127,6 +129,12 @@ function Transactions(props: transactionProps) {
 
     return response.transactions;
   });
+
+  useEffect(() => {
+    if (blockChainParam) {
+      setSelectedChain(blockChainParam.split('?')[0]);
+    }
+  }, [blockChainParam]);
 
   useEffect(() => {
     if (searchValue) {
@@ -162,6 +170,7 @@ function Transactions(props: transactionProps) {
 
         <Select
           defaultValue="ethereum"
+          value={selectedChain}
           style={{ width: '210px', marginLeft: '30px' }}
           options={[
             {

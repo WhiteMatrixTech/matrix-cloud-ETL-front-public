@@ -101,7 +101,9 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       className: 'text-[#000000d9] text-base',
       render: (_, data) => {
         return (
-          <Link to={`/data-store/transactions?blockNumber=${data.blockNumber}`}>
+          <Link
+            to={`/data-store/transactions?blockchain=${selectedChain}?blockNumber=${data.blockNumber}`}
+          >
             {data.transactionCount}
           </Link>
         );
