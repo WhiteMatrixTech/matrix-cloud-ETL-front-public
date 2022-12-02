@@ -105,7 +105,7 @@ function EventHandlers(props: dataStoreProps) {
       <Spin spinning={status === 'loading'} tip="downloading">
         <div className={cn(className, 'pt-10 font-Roboto')}>
           <Table
-            rowKey="userId"
+            rowKey={(record) => `${record.appName}-${record.blockchain}`}
             columns={columns}
             dataSource={eventHandlerData}
             loading={getEventHandlersLoading}

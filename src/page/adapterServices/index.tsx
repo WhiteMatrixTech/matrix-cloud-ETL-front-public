@@ -144,7 +144,7 @@ function AdapterServices(props: adapterServicesProps) {
       <Spin spinning={status === 'loading'} tip="downloading">
         <div className={cn(className, 'pt-10 font-Roboto')}>
           <Table
-            rowKey="userId"
+            rowKey={(record) => `${record.blockNumber} - ${record.blockchain}`}
             columns={columns}
             dataSource={adaptServicesData}
             loading={getAdaptServicesLoading}

@@ -332,7 +332,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
         <Spin spinning={status === 'loading'} tip="downloading">
           <div className={cn(className, 'pt-10 font-Roboto')}>
             <Table
-              rowKey="userId"
+              rowKey={(record) => `${record.blockNumber} - ${record.timestamp}`}
               columns={blockColumns}
               dataSource={blocksData}
               loading={getBlockDataLoading}
@@ -353,7 +353,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
         <Spin spinning={status === 'loading'} tip="downloading">
           <div className={cn(className, 'pt-10 font-Roboto')}>
             <Table
-              rowKey="userId"
+              rowKey={(record) => `${record.blockNumber} - ${record.timestamp}`}
               columns={transactionColumns}
               dataSource={transactionsData}
               loading={getTransactionsLoading}
@@ -374,7 +374,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
         <Spin spinning={status === 'loading'} tip="downloading">
           <div className={cn(className, 'pt-10 font-Roboto')}>
             <Table
-              rowKey="userId"
+              rowKey={(record) => `${record.address} - ${record.blockNumber}`}
               columns={eventsColumns}
               dataSource={eventsData}
               loading={getEventsLoading}

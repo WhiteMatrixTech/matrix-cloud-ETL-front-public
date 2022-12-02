@@ -4,7 +4,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Select, Spin, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import cn from 'classnames';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { JSONTree } from 'react-json-tree';
 import { useAsyncFn } from 'react-use';
 
@@ -171,7 +171,7 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
     } else {
       response = await getEthTokenData({ address });
     }
-    return response.tokens.sort((a, b) => a.address.localeCompare(b.address));
+    return response.tokens;
   });
 
   const [
@@ -187,16 +187,8 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       response = await getFlowTokenData({ address });
     }
 
-    return response.tokens.sort((a, b) => a.address.localeCompare(b.address));
+    return response.tokens;
   });
-
-  const tableData = useMemo(() => {
-    if (selectedChain === 'flow') {
-      return flowTokenData;
-    }
-
-    return ethTokenData;
-  }, [ethTokenData, flowTokenData, selectedChain]);
 
   useEffect(() => {
     if (!searchValue) {
@@ -224,6 +216,14 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
     selectedSearch,
     searchByTokenId
   ]);
+
+  const tokenData = useMemo(() => {
+    if (selectedChain === 'flow') {
+      return flowTokenData;
+    }
+
+    return ethTokenData;
+  }, [ethTokenData, flowTokenData, selectedChain]);
 
   return (
     <div className={cn(className, 'py-10')}>
@@ -298,9 +298,9 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       <Spin spinning={status === 'loading'} tip="downloading">
         <div className={cn(className, 'pt-10 font-Roboto')}>
           <Table
-            rowKey="tokenId"
+            rowKey={(record) => `${record.address}-${record.tokenId}`}
             columns={Columns}
-            dataSource={tableData}
+            dataSource={tokenData}
             loading={getEthTokenDataLoading || getFlowTokenDataLoading}
           />
         </div>

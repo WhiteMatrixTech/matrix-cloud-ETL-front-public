@@ -146,7 +146,7 @@ function Events(props: eventsProps) {
       <Spin spinning={status === 'loading'} tip="downloading">
         <div className={cn(className, 'pt-10 font-Roboto')}>
           <Table
-            rowKey="userId"
+            rowKey={(record) => `${record.address} - ${record.blockNumber}`}
             columns={Columns}
             dataSource={eventsData}
             loading={getEventsLoading}

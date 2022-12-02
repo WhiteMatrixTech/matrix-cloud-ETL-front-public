@@ -115,7 +115,7 @@ function TaskDetail(props: taskDetailProps) {
       <Spin spinning={status === 'loading'} tip="downloading">
         <div className={cn(className, 'pt-10 font-Roboto')}>
           <Table
-            rowKey="userId"
+            rowKey={(record) => `${record.taskId}-${record.taskName}`}
             columns={Columns}
             dataSource={taskLogData}
             loading={getTaskLogDataLoading}

@@ -154,7 +154,7 @@ function Blocks(props: blockProps) {
       <Spin spinning={status === 'loading'} tip="downloading">
         <div className={cn(className, 'pt-10 font-Roboto')}>
           <Table
-            rowKey="userId"
+            rowKey={(record) => `${record.blockNumber}-${record.timestamp}`}
             columns={Columns}
             dataSource={blocksData}
             loading={getBlockDataLoading}
