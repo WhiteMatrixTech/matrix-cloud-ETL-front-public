@@ -58,7 +58,7 @@ function AdapterServices(props: adapterServicesProps) {
       className: 'text-[#000000] font-[700] text-base capitalize',
       render: (_, data) => {
         if (data.blockchain === 'bsc') {
-          return <div>BSC</div>;
+          return <div>BNB Chain</div>;
         } else {
           return <div>{data.blockchain}</div>;
         }
