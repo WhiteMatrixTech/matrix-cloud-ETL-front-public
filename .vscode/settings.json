@@ -15,8 +15,10 @@
     "opentype",
     "Phanta",
     "phantabear",
+    "Phantaci",
     "Plex",
     "postprocessor",
+    "Rivermen",
     "ROADMAP",
     "Roboto",
     "spork",
@@ -24,7 +26,8 @@
     "Swiper",
     "Theirsverse",
     "truetype",
-    "uglifyjs"
+    "uglifyjs",
+    "uuidv"
   ],
   "prettier.configPath": ".prettierrc.js",
   "editor.codeActionsOnSave": {

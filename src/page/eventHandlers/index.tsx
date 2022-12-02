@@ -4,6 +4,7 @@ import { FilterValue } from 'antd/lib/table/interface';
 import cn from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useAsyncFn } from 'react-use';
+import { v4 as uuidv4 } from 'uuid';
 
 import { getEventHandlersData } from '@/service/services';
 
@@ -58,7 +59,44 @@ function EventHandlers(props: dataStoreProps) {
       ellipsis: true,
       className: 'text-[#000000d9] text-base',
       render: (_, data) => {
-        return <div>{data.appName || 'N/A'}</div>;
+        let link: string;
+        switch (data.appName) {
+          case 'Phantaci':
+            link = 'https://ezek.io/';
+            break;
+          case 'MatrixMarket':
+            link = 'https://matrixmarket.xyz/home';
+            break;
+          case 'MatrixWorld':
+            link = 'https://matrixworld.org/home';
+            break;
+          case 'Theirsverse':
+            link = 'https://theirsverse.com/';
+            break;
+          case 'Rivermen':
+            link = 'https://rivermen.io/';
+            break;
+
+          default:
+            link = '';
+        }
+
+        if (!data.appName) {
+          return <div>N/A</div>;
+        }
+
+        if (link === '') {
+          return <div>{data.appName}</div>;
+        }
+
+        return (
+          <div
+            className="cursor-pointer text-[#1890ff]"
+            onClick={() => window.open(link)}
+          >
+            {data.appName}
+          </div>
+        );
       }
     },
     {
@@ -105,7 +143,7 @@ function EventHandlers(props: dataStoreProps) {
       <Spin spinning={status === 'loading'} tip="downloading">
         <div className={cn(className, 'pt-10 font-Roboto')}>
           <Table
-            rowKey={(record) => `${record.appName}-${record.blockchain}`}
+            rowKey={(record) => `${record.appName}-${uuidv4()}`}
             columns={columns}
             dataSource={eventHandlerData}
             loading={getEventHandlersLoading}

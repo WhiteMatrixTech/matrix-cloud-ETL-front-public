@@ -34,7 +34,7 @@ function DataStore(props: dataStoreProps) {
           )}
           onClick={() => setDataStoreTab('TokenData')}
         >
-          Token Data
+          NFT Data
         </span>
 
         <span

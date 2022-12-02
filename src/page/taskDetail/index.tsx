@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAsyncFn, useSearchParam } from 'react-use';
+import { v4 as uuidv4 } from 'uuid';
 
 import { getTaskLogData } from '@/service/services';
 
@@ -115,7 +116,7 @@ function TaskDetail(props: taskDetailProps) {
       <Spin spinning={status === 'loading'} tip="downloading">
         <div className={cn(className, 'pt-10 font-Roboto')}>
           <Table
-            rowKey={(record) => `${record.taskId}-${record.taskName}`}
+            rowKey={(record) => `${record.taskId} - ${uuidv4()}`}
             columns={Columns}
             dataSource={taskLogData}
             loading={getTaskLogDataLoading}

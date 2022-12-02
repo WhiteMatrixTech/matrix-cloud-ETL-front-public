@@ -7,6 +7,7 @@ import cn from 'classnames';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { JSONTree } from 'react-json-tree';
 import { useAsyncFn } from 'react-use';
+import { v4 as uuidv4 } from 'uuid';
 
 import {
   ethTokenDataRes,
@@ -298,7 +299,7 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       <Spin spinning={status === 'loading'} tip="downloading">
         <div className={cn(className, 'pt-10 font-Roboto')}>
           <Table
-            rowKey={(record) => `${record.address}-${record.tokenId}`}
+            rowKey={(record) => `${record.address}-${uuidv4()}`}
             columns={Columns}
             dataSource={tokenData}
             loading={getEthTokenDataLoading || getFlowTokenDataLoading}

@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAsyncFn } from 'react-use';
+import { v4 as uuidv4 } from 'uuid';
 
 import { getTransactionData } from '@/service/services';
 
@@ -168,7 +169,7 @@ function Transactions(props: transactionProps) {
       <Spin spinning={status === 'loading'} tip="downloading">
         <div className={cn(className, 'pt-10 font-Roboto')}>
           <Table
-            rowKey={(record) => `${record.blockNumber} - ${record.timestamp}`}
+            rowKey={(record) => `${record.blockNumber} - ${uuidv4()}`}
             columns={Columns}
             dataSource={transactionsData}
             loading={getTransactionsLoading}
