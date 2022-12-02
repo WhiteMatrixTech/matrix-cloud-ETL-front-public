@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAsyncFn } from 'react-use';
 
-import { getBlockData } from '@/service/services';
+import { getBlockData, getBlockDataByBlockNumber } from '@/service/services';
 
 interface blockProps {
   className?: string;
@@ -86,10 +86,13 @@ function Blocks(props: blockProps) {
     getBlocksServices
   ] = useAsyncFn(async (chainType: string, blockNumber?: number) => {
     if (blockNumber) {
-      const response = await getBlockData({ chainType, blockNumber });
-      return response.blocks;
+      const response = await getBlockDataByBlockNumber({
+        chainType,
+        blockNumber
+      });
+      return [response];
     }
-    const response = await getBlockData({ chainType });
+    const response = await getBlockData(chainType);
 
     return response.blocks;
   });
@@ -139,12 +142,12 @@ function Blocks(props: blockProps) {
               label: 'Polygon'
             },
             {
-              value: 'flow',
-              label: 'Flow'
+              value: 'bsc',
+              label: 'BNB Chain'
             },
             {
-              value: 'bsc',
-              label: 'BSC'
+              value: 'flow',
+              label: 'Flow'
             }
           ]}
           onChange={handleChangeSelect}

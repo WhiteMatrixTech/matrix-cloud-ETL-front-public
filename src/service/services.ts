@@ -74,7 +74,7 @@ export const getEventHandlersData = () => {
 
 interface BlockReq {
   chainType: string;
-  blockNumber?: number;
+  blockNumber: number;
 }
 
 interface BlocksType {
@@ -89,10 +89,20 @@ interface BlockDataRes {
   blocks: BlocksType[];
 }
 
-export const getBlockData = (params: BlockReq) => {
-  return getData<BlockReq, BlockDataRes>(
+export const getBlockData = (chainType: string) => {
+  return getData<{ chainType: string }, BlockDataRes>(
     '/etl/api/v1/blockchain/blocks',
-    params,
+    { chainType },
+    {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  );
+};
+
+export const getBlockDataByBlockNumber = (params: BlockReq) => {
+  return getData<{ chainType: string }, BlocksType>(
+    `/etl/api/v1/blockchain/blocks/${params.blockNumber}`,
+    { chainType: params.chainType },
     {
       'Content-Type': 'application/x-www-form-urlencoded'
     }
@@ -121,6 +131,23 @@ export const getTransactionData = (params: TransactionReq) => {
   return getData<TransactionReq, TransactionDataRes>(
     '/etl/api/v1/blockchain/transactions',
     params,
+    {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  );
+};
+
+interface TransactionDataByTxnHashType {
+  chainType: string;
+  transactionHash: string;
+}
+
+export const getTransactionDataByTxnHash = (
+  params: TransactionDataByTxnHashType
+) => {
+  return getData<{ chainType: string }, TransactionType>(
+    `/etl/api/v1/blockchain/transactions/${params.transactionHash}`,
+    { chainType: params.chainType },
     {
       'Content-Type': 'application/x-www-form-urlencoded'
     }

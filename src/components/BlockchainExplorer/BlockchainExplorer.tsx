@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import {
   getBlockData,
+  getBlockDataByBlockNumber,
   getEventsData,
   getTransactionData
 } from '@/service/services';
@@ -100,9 +101,9 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       className: 'text-[#000000d9] text-base',
       render: (_, data) => {
         return (
-          <div className="text-[#2483FF] underline underline-offset-2">
+          <Link to={`/data-store/transactions?blockNumber=${data.blockNumber}`}>
             {data.transactionCount}
-          </div>
+          </Link>
         );
       }
     }
@@ -231,12 +232,13 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
     getBlocksServices
   ] = useAsyncFn(async (chainType: string, blockNumber?: number) => {
     if (blockNumber) {
-      const response = await getBlockData({ chainType, blockNumber });
-      return response.blocks.length > 3
-        ? response.blocks.slice(0, 3)
-        : response.blocks;
+      const response = await getBlockDataByBlockNumber({
+        chainType,
+        blockNumber
+      });
+      return [response];
     }
-    const response = await getBlockData({ chainType });
+    const response = await getBlockData(chainType);
 
     return response.blocks.length > 3
       ? response.blocks.slice(0, 3)
@@ -315,12 +317,12 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
               label: 'Polygon'
             },
             {
-              value: 'flow',
-              label: 'Flow'
+              value: 'bsc',
+              label: 'BNB Chain'
             },
             {
-              value: 'bsc',
-              label: 'BSC'
+              value: 'flow',
+              label: 'Flow'
             }
           ]}
           onChange={(value: string) => setSelectedChain(value)}

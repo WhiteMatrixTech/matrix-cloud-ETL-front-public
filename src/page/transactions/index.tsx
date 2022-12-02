@@ -5,10 +5,13 @@ import cn from 'classnames';
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useAsyncFn } from 'react-use';
+import { useAsyncFn, useSearchParam } from 'react-use';
 import { v4 as uuidv4 } from 'uuid';
 
-import { getTransactionData } from '@/service/services';
+import {
+  getTransactionData,
+  getTransactionDataByTxnHash
+} from '@/service/services';
 
 interface transactionProps {
   className?: string;
@@ -25,6 +28,7 @@ interface TransactionColumnsType {
 
 function Transactions(props: transactionProps) {
   const { className } = props;
+  const blockNumberParam = useSearchParam('blockNumber');
   const [selectedChain, setSelectedChain] = useState<string>('ethereum');
   const [searchValue, setSearchValue] = useState<string>('');
 
@@ -99,19 +103,34 @@ function Transactions(props: transactionProps) {
   const [
     { loading: getTransactionsLoading, value: transactionsData },
     getTransactionsServices
-  ] = useAsyncFn(async (chainType: string, blockNumber?: number) => {
-    if (blockNumber) {
-      const response = await getTransactionData({ chainType, blockNumber });
+  ] = useAsyncFn(async (chainType: string, transactionHash?: string) => {
+    if (transactionHash) {
+      const response = await getTransactionDataByTxnHash({
+        chainType,
+        transactionHash
+      });
+      return [response];
+    }
+
+    if (blockNumberParam) {
+      const response = await getTransactionData({
+        chainType,
+        blockNumber: Number(blockNumberParam)
+      });
+
       return response.transactions;
     }
-    const response = await getTransactionData({ chainType });
+
+    const response = await getTransactionData({
+      chainType
+    });
 
     return response.transactions;
   });
 
   useEffect(() => {
     if (searchValue) {
-      return void getTransactionsServices(selectedChain, Number(searchValue));
+      return void getTransactionsServices(selectedChain, searchValue);
     }
     void getTransactionsServices(selectedChain);
   }, [getTransactionsServices, searchValue, selectedChain]);
@@ -127,11 +146,11 @@ function Transactions(props: transactionProps) {
       <div className="flex px-10 py-3">
         <input
           value={searchValue}
-          placeholder="Search by block number"
+          placeholder="Search by transaction hash"
           className="h-10 w-[500px] border-[1px] border-[#D9D9D9] p-2 outline-none"
           onChange={(e) => setSearchValue(e.target.value)}
           onClick={() =>
-            void getTransactionsServices(selectedChain, Number(searchValue))
+            void getTransactionsServices(selectedChain, searchValue)
           }
         />
         <div
@@ -159,7 +178,7 @@ function Transactions(props: transactionProps) {
             },
             {
               value: 'bsc',
-              label: 'BSC'
+              label: 'BNB Chain'
             }
           ]}
           onChange={(value: string) => setSelectedChain(value)}

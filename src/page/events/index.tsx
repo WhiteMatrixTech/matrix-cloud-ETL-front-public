@@ -133,12 +133,12 @@ function Events(props: eventsProps) {
             label: 'Polygon'
           },
           {
-            value: 'flow',
-            label: 'Flow'
+            value: 'bsc',
+            label: 'BNB Chain'
           },
           {
-            value: 'bsc',
-            label: 'BSC'
+            value: 'flow',
+            label: 'Flow'
           }
         ]}
         onChange={handleChangeSelect}
