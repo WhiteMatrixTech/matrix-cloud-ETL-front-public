@@ -1,28 +1,21 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-import type { MenuProps } from 'antd';
-import { cloneDeep } from 'lodash';
+import dataAdapterIcon from '@/assets/images/dataAdapter.svg';
+import dataStoresIcon from '@/assets/images/dataStores.svg';
+import eventHandlersIcon from '@/assets/images/eventHandlers.svg';
 
-import { flatTreeData, ITree } from '@/utils/common';
-// eslint-disable-next-line @typescript-eslint/no-type-alias
-type MenuItem = Required<MenuProps>['items'][number];
-
-export const MenuList: MenuItem[] = [
+export const MenuList = [
   {
     label: 'Data Adapter Jobs',
-    key: '/adapter-services'
+    key: '/adapter-services',
+    icon: dataAdapterIcon
   },
   {
     label: 'Event Handlers',
-    key: '/event-handlers'
+    key: '/event-handlers',
+    icon: eventHandlersIcon
   },
-  // {
-  //   label: 'Downstream Apps',
-  //   key: '/downstream-apps'
-  // },
   {
     label: 'Data Stores',
-    key: '/data-store'
+    key: '/data-store',
+    icon: dataStoresIcon
   }
 ];
-
-export const flatMenuList = flatTreeData(cloneDeep(MenuList) as ITree[]);

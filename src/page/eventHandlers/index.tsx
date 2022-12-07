@@ -136,12 +136,12 @@ function EventHandlers(props: dataStoreProps) {
 
   return (
     <div className={cn(className)}>
-      <div className="text-[24px] font-[600] capitalize text-[#2483FF]">
+      <div className="text-[24px] font-[600] capitalize text-[#FFFFFF]">
         Event Handlers
       </div>
 
       <Spin spinning={status === 'loading'} tip="downloading">
-        <div className={cn(className, 'pt-10 font-Roboto')}>
+        <div className={cn(className, 'pt-4 font-Roboto')}>
           <Table
             rowKey={(record) => `${record.appName}-${uuidv4()}`}
             columns={columns}

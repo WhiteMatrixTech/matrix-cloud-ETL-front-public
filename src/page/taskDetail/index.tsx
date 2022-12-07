@@ -110,7 +110,7 @@ function TaskDetail(props: taskDetailProps) {
       <div className="px-10 py-3 text-[24px] font-[600] capitalize text-[#2483FF]">
         <Link to="/adapter-services">Data Adapter Jobs</Link>
         <span className="mx-4">{'>'}</span>
-        <span className="text-[#292B2E]">Task Detail</span>
+        <span className="text-[#ffffff]">Task Detail</span>
       </div>
 
       <Spin spinning={status === 'loading'} tip="downloading">

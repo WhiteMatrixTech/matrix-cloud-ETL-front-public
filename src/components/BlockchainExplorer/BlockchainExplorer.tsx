@@ -1,4 +1,4 @@
-import { SearchOutlined } from '@ant-design/icons';
+import { ArrowDownOutlined, SearchOutlined } from '@ant-design/icons';
 import { Select, Spin, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import cn from 'classnames';
@@ -219,7 +219,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
           <div>
             {data.topics.map((item, index) => (
               <div key={index} className="m-[5px] text-[#000000d9]">
-                {`"${item}"`}
+                {`${item}`}
                 {index >= data.topics.length - 1 ? '' : ','}
               </div>
             ))}
@@ -296,7 +296,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
         <input
           value={searchValue}
           placeholder="Search by block number"
-          className="h-10 w-[500px] border-[1px] border-[#D9D9D9] p-2 outline-none"
+          className="h-10 w-[400px] rounded-l-[4px] border-[1px] border-[#ffffff66] bg-transparent p-2 text-[#ffffff] outline-none"
           onChange={(e) => setSearchValue(e.target.value)}
         />
         <div
@@ -332,7 +332,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       </div>
 
       <div className="mt-14">
-        <div className="text-[20px] text-[#2483FF]">Latest Blocks</div>
+        <div className="text-[20px] text-[#ffffff]">Latest Blocks</div>
 
         <Spin spinning={status === 'loading'} tip="downloading">
           <div className={cn(className, 'pt-10 font-Roboto')}>
@@ -343,9 +343,13 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
               loading={getBlockDataLoading}
               pagination={false}
             />
-            <div className="mt-[2px] cursor-pointer text-right text-[16px] font-[600] text-[#1890FF]">
-              <Link to="/data-store/blocks">
-                View More <span className="mx-2">{'>'}</span>
+            <div className="flex cursor-pointer justify-center  border-t-[1px] border-[#474E6C] bg-[#262D4E] text-[16px] font-[400]">
+              <Link
+                className="my-4 flex items-center rounded-[8px] bg-[#303961] py-4 px-8 text-[#ffffff]"
+                to="/data-store/blocks"
+              >
+                <ArrowDownOutlined />
+                <span className="ml-2">View More</span>
               </Link>
             </div>
           </div>
@@ -353,7 +357,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       </div>
 
       <div className="mt-14">
-        <div className="text-[20px] text-[#2483FF]">Latest Transactions</div>
+        <div className="text-[20px] text-[#ffffff]">Latest Transactions</div>
 
         <Spin spinning={status === 'loading'} tip="downloading">
           <div className={cn(className, 'pt-10 font-Roboto')}>
@@ -364,9 +368,13 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
               loading={getTransactionsLoading}
               pagination={false}
             />
-            <div className="mt-[2px] cursor-pointer text-right text-[16px] font-[600] text-[#1890FF]">
-              <Link to="/data-store/transactions">
-                View More <span className="mx-2">{'>'}</span>
+            <div className="flex cursor-pointer justify-center  border-t-[1px] border-[#474E6C] bg-[#262D4E] text-[16px] font-[400]">
+              <Link
+                className="my-4 flex items-center rounded-[8px] bg-[#303961] py-4 px-8 text-[#ffffff]"
+                to="/data-store/transactions"
+              >
+                <ArrowDownOutlined />
+                <span className="ml-2">View More</span>
               </Link>
             </div>
           </div>
@@ -374,7 +382,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       </div>
 
       <div className="mt-14">
-        <div className="text-[20px] text-[#2483FF]">Latest Events</div>
+        <div className="text-[20px] text-[#ffffff]">Latest Events</div>
 
         <Spin spinning={status === 'loading'} tip="downloading">
           <div className={cn(className, 'pt-10 font-Roboto')}>
@@ -385,9 +393,13 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
               loading={getEventsLoading}
               pagination={false}
             />
-            <div className="mt-[2px] cursor-pointer text-right text-[16px] font-[600] text-[#1890FF]">
-              <Link to="/data-store/events">
-                View More <span className="mx-2">{'>'}</span>
+            <div className="flex cursor-pointer justify-center  border-t-[1px] border-[#474E6C] bg-[#262D4E] text-[16px] font-[400]">
+              <Link
+                className="my-4 flex items-center rounded-[8px] bg-[#303961] py-4 px-8 text-[#ffffff]"
+                to="/data-store/events"
+              >
+                <ArrowDownOutlined />
+                <span className="ml-2">View More</span>
               </Link>
             </div>
           </div>

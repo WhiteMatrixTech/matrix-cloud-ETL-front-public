@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { useAsyncFn } from 'react-use';
 import { v4 as uuidv4 } from 'uuid';
 
+import dateIcon from '@/assets/images/dateIcon.svg';
 import { getTaskData } from '@/service/services';
 
 interface adapterServicesProps {
@@ -55,7 +56,7 @@ function AdapterServices(props: adapterServicesProps) {
         compare: (a, b) => a.blockchain.length - b.blockchain.length,
         multiple: 1
       },
-      className: 'text-[#000000] font-[700] text-base capitalize',
+      className: 'text-[#000000] font-[600] text-[14px] text-base capitalize',
       render: (_, data) => {
         if (data.blockchain === 'bsc') {
           return <div>BNB Chain</div>;
@@ -68,10 +69,13 @@ function AdapterServices(props: adapterServicesProps) {
       title: 'TaskName',
       dataIndex: 'taskName',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base w-[30%]',
+      className: 'text-[#000000d9] font-[400] text-base w-[30%]',
       render: (_, data) => {
         return (
-          <Link to={`/adapter-services/taskDetail?taskName=${data.taskName}`}>
+          <Link
+            className="text-[#59A8D4] underline underline-offset-4 hover:underline "
+            to={`/adapter-services/taskDetail?taskName=${data.taskName}`}
+          >
             {data.taskName}
           </Link>
         );
@@ -81,13 +85,13 @@ function AdapterServices(props: adapterServicesProps) {
       title: 'TaskType',
       dataIndex: 'taskType',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] font-[400] text-base'
     },
     {
       title: 'BlockNumber',
       dataIndex: 'blockNumber',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base',
+      className: 'text-[#000000d9] font-[400] text-base',
       render: (_, data) => {
         return <div>{data.blockNumber || 'N/A'}</div>;
       }
@@ -96,10 +100,13 @@ function AdapterServices(props: adapterServicesProps) {
       title: 'CreateTime',
       dataIndex: 'createTime',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base w-[20%]',
+      className: 'text-[#FFFFFFE5] font-[400] text-base w-[20%]',
       render: (_, data) => {
         return (
-          <div className="">{dayjs(Number(data.createTime)).toISOString()}</div>
+          <div className="flex items-center">
+            <img className="mr-2" src={dateIcon} />
+            {dayjs(Number(data.createTime)).toISOString()}
+          </div>
         );
       }
     },
@@ -110,10 +117,16 @@ function AdapterServices(props: adapterServicesProps) {
         return (
           <div
             className={cn(
-              'text-[18px] font-[700] uppercase',
-              data.status === 'paused' ? 'text-[#FF7800]' : 'text-[#499F5F]'
+              'flex items-center text-[18px] font-[600] uppercase',
+              data.status === 'paused' ? 'text-[#FF7800]' : 'text-[#4AA785]'
             )}
           >
+            <div
+              className={cn(
+                'mr-2 h-[6px] w-[6px] rounded-[50%]',
+                data.status === 'paused' ? 'bg-[#FF7800]' : 'bg-[#499F5F]'
+              )}
+            />
             {data.status}
           </div>
         );
@@ -138,18 +151,17 @@ function AdapterServices(props: adapterServicesProps) {
 
   return (
     <div className={cn(className)}>
-      <div className="text-[24px] font-[600] capitalize text-[#2483FF] ">
+      <div className="text-[24px] font-[600] capitalize text-[#FFFFFF] ">
         Data Adapter Jobs
       </div>
 
       <Spin spinning={status === 'loading'} tip="downloading">
-        <div className={cn(className, 'pt-10 font-Roboto')}>
+        <div className={cn(className, 'pt-4 font-Roboto')}>
           <Table
             rowKey={(record) => `${record.blockNumber} - ${uuidv4()}`}
             columns={columns}
             dataSource={adaptServicesData}
             loading={getAdaptServicesLoading}
-            // pagination={false}
             onChange={handleChange}
           />
         </div>

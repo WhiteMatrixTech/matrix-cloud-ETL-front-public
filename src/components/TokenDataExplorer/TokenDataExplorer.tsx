@@ -227,7 +227,7 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
   }, [ethTokenData, flowTokenData, selectedChain]);
 
   return (
-    <div className={cn(className, 'py-10')}>
+    <div className={cn(className, 'py-4')}>
       <div className="flex items-center">
         <Select
           value={selectedSearch}
@@ -248,7 +248,7 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
         <input
           value={searchValue}
           placeholder={`Search by ${selectedSearch}`}
-          className="h-10 w-[400px] border-[1px] border-[#D9D9D9] p-2 outline-none"
+          className="h-10 w-[400px] rounded-l-[4px] border-[1px] border-[#ffffff66] bg-transparent p-2 text-[#ffffff] outline-none"
           onChange={(e) => setSearchValue(e.target.value)}
         />
         <div
@@ -277,14 +277,14 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
 
       {selectedSearch === 'Contract Address' && searchValue && (
         <div className="mt-2 flex">
-          <div className="h-[40px] w-[159px] text-center text-[20px] leading-[40px] ">
+          <div className="h-[40px] w-[159px] text-center text-[20px] leading-[40px] text-[#ffffff] ">
             TokenId:
           </div>
 
           <input
             value={searchByTokenId}
             placeholder={`Search by tokenId`}
-            className="h-10 w-[400px] border-[1px] border-[#D9D9D9] p-2 outline-none"
+            className="h-10 w-[400px] rounded-l-[4px] border-[1px] border-[#ffffff66] bg-transparent p-2 text-[#ffffff] outline-none"
             onChange={(e) => setSearchByTokenId(e.target.value)}
           />
           <div

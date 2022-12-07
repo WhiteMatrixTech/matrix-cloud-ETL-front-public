@@ -148,14 +148,14 @@ function Transactions(props: transactionProps) {
       <div className="px-10 py-3 text-[24px] font-[600] capitalize text-[#2483FF]">
         <Link to="/data-store?params=blockchain">Blockchain Explorer</Link>
         <span className="mx-4">{'>'}</span>
-        <span className="text-[#292B2E]">transactions</span>
+        <span className="text-[#ffffff]">transactions</span>
       </div>
 
       <div className="flex px-10 py-3">
         <input
           value={searchValue}
           placeholder="Search by transaction hash"
-          className="h-10 w-[500px] border-[1px] border-[#D9D9D9] p-2 outline-none"
+          className="h-10 w-[400px] rounded-l-[4px] border-[1px] border-[#ffffff66] bg-transparent p-2 text-[#ffffff] outline-none"
           onChange={(e) => setSearchValue(e.target.value)}
           onClick={() =>
             void getTransactionsServices(selectedChain, searchValue)

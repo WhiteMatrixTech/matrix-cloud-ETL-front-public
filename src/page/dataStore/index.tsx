@@ -26,7 +26,7 @@ function DataStore(props: dataStoreProps) {
 
   return (
     <div className={cn(className, 'mt-6')}>
-      <div className="font-Sans text-[24px] font-[500] capitalize text-[#A0A0A0]">
+      <div className="font-Sans text-[24px] font-[500] capitalize text-[#ffffff]">
         <span
           className={cn(
             ' cursor-pointer',

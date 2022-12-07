@@ -86,7 +86,7 @@ function Events(props: eventsProps) {
           <div>
             {data.topics.map((item, index) => (
               <div key={index} className="m-[5px] text-[#000000d9]">
-                {`"${item}"`}
+                {`${item}`}
                 {index >= data.topics.length - 1 ? '' : ','}
               </div>
             ))}
@@ -118,7 +118,7 @@ function Events(props: eventsProps) {
       <div className="px-10 py-3 text-[24px] font-[600] capitalize text-[#2483FF]">
         <Link to="/data-store?params=blockchain">Blockchain Explorer</Link>
         <span className="mx-4">{'>'}</span>
-        <span className="text-[#292B2E]">events</span>
+        <span className="text-[#ffffff]">events</span>
       </div>
       <Select
         defaultValue="ethereum"

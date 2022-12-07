@@ -17,7 +17,6 @@ export function Layout(props: LayoutProps) {
 
   return (
     <AppLayout className="h-screen overflow-hidden">
-      <Header />
       <AppLayout>
         <Sider
           theme="light"
@@ -27,7 +26,7 @@ export function Layout(props: LayoutProps) {
         >
           <LeftMenu />
         </Sider>
-        <Content className="min-h-full overflow-y-auto overflow-x-hidden bg-[#F5F5F5] px-10 py-4">
+        <Content className="min-h-full overflow-y-auto overflow-x-hidden bg-[#474E6C] px-8 pt-[60px] pb-10">
           {children}
         </Content>
       </AppLayout>

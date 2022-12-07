@@ -14,7 +14,86 @@
   font-display: swap;
 }
 
-.ant-modal {
+.ant-table-thead > tr > th {
+  background: #373e62 !important;
+  border-bottom: 0 !important;
+  color: #ffffffcc !important;
+  font-weight: 400 !important;
+  font-size: 14px;
+}
+
+.ant-table-thead
+  > tr
+  > th:not(:last-child):not(.ant-table-selection-column):not(.ant-table-row-expand-icon-cell):not([colspan])::before {
+  background-color: #474e6c !important;
+}
+
+.ant-table-tbody tr.ant-table-row {
+  background: #262d4e !important;
+}
+
+.ant-table-tbody > tr > td {
+  border-bottom: 0 !important;
+  color: #ffffff !important;
+  font-weight: 400 !important;
+}
+
+.ant-table-cell-ellipsis {
+  white-space: initial !important;
+  text-overflow: initial !important;
+}
+
+.ant-table-tbody > tr.ant-table-row:hover > td,
+.ant-table-tbody > tr > td.ant-table-cell-row-hover {
+  background: #2d304a !important;
+}
+
+.ant-pagination-prev .ant-pagination-item-link,
+.ant-pagination-next .ant-pagination-item-link {
+  background-color: transparent !important;
+  border: 0 !important;
+  color: #ffffff;
+}
+
+.ant-pagination-item {
+  background-color: transparent !important;
+  border: 0 !important;
+}
+
+.ant-pagination-item-active {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-radius: 8px !important;
+}
+
+.ant-pagination-item a {
+  color: #ffffff !important;
+}
+
+.ant-pagination-disabled .ant-pagination-item-link,
+.ant-pagination-disabled:hover .ant-pagination-item-link {
+  color: #ffffff !important;
+}
+
+.ant-select-selector {
+  height: 40px !important;
+  color: #ffffff;
+}
+.ant-select-arrow {
+  color: #ffffff66 !important;
+}
+
+.ant-select-selection-item {
+  display: flex;
+  align-items: center;
+}
+
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  background-color: transparent !important;
+  border: 1px solid #ffffff66 !important;
+  border-radius: 8px !important;
+}
+
+/* .ant-modal {
   pointer-events: all !important;
 }
 
@@ -53,14 +132,14 @@
 
 .ant-table-tbody tr.ant-table-row {
   background: #f5f0ff !important;
-}
+} */
 
 /* .ant-table-tbody > tr.ant-table-row:nth-child(odd):hover > td,
 .ant-table-tbody > tr:nth-child(odd) > td.ant-table-cell-row-hover {
   background: rgba(245, 240, 255, 0.8) !important;
 } */
 
-.ant-table-row:hover {
+/* .ant-table-row:hover {
   background: rgba(245, 240, 255, 0.8) !important;
 }
 
@@ -84,7 +163,7 @@
 .ant-select-selection-item {
   display: flex;
   align-items: center;
-}
+} */
 
 .ant-table-cell ul {
   background-color: transparent !important;
