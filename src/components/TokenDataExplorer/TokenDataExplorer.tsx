@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { SearchOutlined } from '@ant-design/icons';
-import { Select, Spin, Table } from 'antd';
+import { Select, Spin, Table, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import cn from 'classnames';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { JSONTree } from 'react-json-tree';
 import { useAsyncFn } from 'react-use';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,6 +16,8 @@ import {
   getFlowTokenData,
   getFlowTokenDataByOwner
 } from '@/service/services';
+
+import styles from './TokenDataExplorer.module.less';
 
 interface TokenDataExplorerProps {
   className?: string;
@@ -131,7 +133,25 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
         if (!data.metadata.description) {
           return <div>N/A</div>;
         }
-        return <div>{data.metadata.description}</div>;
+        return (
+          <Tooltip
+            overlayStyle={{
+              maxWidth: '50%'
+            }}
+            overlayInnerStyle={{
+              padding: '16px',
+              background: '#313857',
+              borderRadius: '8px'
+            }}
+            placement="top"
+            arrowPointAtCenter={true}
+            title={data.metadata.description}
+          >
+            <div className={cn(styles.description)}>
+              {data.metadata.description}
+            </div>
+          </Tooltip>
+        );
       }
     },
     {
@@ -248,11 +268,11 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
         <input
           value={searchValue}
           placeholder={`Search by ${selectedSearch}`}
-          className="h-10 w-[400px] rounded-l-[4px] border-[1px] border-[#ffffff66] bg-transparent p-2 text-[#ffffff] outline-none"
+          className="h-10 w-[400px] rounded-l-[8px] border-[1px] border-[#ffffff66] bg-transparent p-2 text-[#ffffff] outline-none"
           onChange={(e) => setSearchValue(e.target.value)}
         />
         <div
-          className="flex h-10 w-11 items-center justify-center bg-[#1890FF] text-[#FFFFFF]"
+          className="flex h-10 w-11 items-center justify-center rounded-r-[8px] bg-[#1890FF] text-[#FFFFFF]"
           style={{ boxShadow: '0px 2px 0px rgba(0, 0, 0, 0.043)' }}
         >
           <SearchOutlined />
@@ -284,11 +304,11 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
           <input
             value={searchByTokenId}
             placeholder={`Search by tokenId`}
-            className="h-10 w-[400px] rounded-l-[4px] border-[1px] border-[#ffffff66] bg-transparent p-2 text-[#ffffff] outline-none"
+            className="h-10 w-[400px] rounded-l-[8px] border-[1px] border-[#ffffff66] bg-transparent p-2 text-[#ffffff] outline-none"
             onChange={(e) => setSearchByTokenId(e.target.value)}
           />
           <div
-            className="flex h-10 w-11 items-center justify-center bg-[#1890FF] text-[#FFFFFF]"
+            className="flex h-10 w-11 items-center justify-center rounded-r-[8px] bg-[#1890FF] text-[#FFFFFF]"
             style={{ boxShadow: '0px 2px 0px rgba(0, 0, 0, 0.043)' }}
           >
             <SearchOutlined />

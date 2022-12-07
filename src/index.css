@@ -14,6 +14,12 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Inter';
+  src: url('./assets/fonts/Inter-Medium.ttf');
+  font-display: swap;
+}
+
 .ant-table-thead > tr > th {
   background: #373e62 !important;
   border-bottom: 0 !important;
@@ -93,77 +99,17 @@
   border-radius: 8px !important;
 }
 
-/* .ant-modal {
-  pointer-events: all !important;
+.ant-tooltip-arrow-content::before {
+  background: #313857 !important;
 }
 
-.ant-table-thead > tr > th {
-  background: #2483ff !important;
-  font-weight: 500 !important;
-  font-size: 18px;
-  line-height: 27px;
-  text-transform: capitalize;
-  color: #f9f7ff !important;
+.ant-table-placeholder .ant-table-cell {
+  background: #262d4e !important;
 }
 
-.ant-popover-title {
-  border-bottom: 0px !important;
-}
-
-.ant-table-filter-trigger {
+.ant-empty-normal {
   color: #ffffff !important;
 }
-
-.ant-popover-arrow {
-  display: none !important;
-}
-
-.ant-spin {
-  color: #2483ff !important;
-}
-
-.ant-spin-dot-item {
-  background-color: #2483ff !important;
-}
-
-.ant-breadcrumb-separator {
-  vertical-align: text-bottom;
-}
-
-.ant-table-tbody tr.ant-table-row {
-  background: #f5f0ff !important;
-} */
-
-/* .ant-table-tbody > tr.ant-table-row:nth-child(odd):hover > td,
-.ant-table-tbody > tr:nth-child(odd) > td.ant-table-cell-row-hover {
-  background: rgba(245, 240, 255, 0.8) !important;
-} */
-
-/* .ant-table-row:hover {
-  background: rgba(245, 240, 255, 0.8) !important;
-}
-
-.ant-table-cell-ellipsis {
-  white-space: initial !important;
-  text-overflow: initial !important;
-}
-
-.ant-modal-content .ant-btn-primary {
-  background-color: #2483ff !important;
-}
-
-.ant-modal-content .ant-btn-default:hover {
-  color: #2483ff !important;
-  border-color: #2483ff !important;
-}
-.ant-select-selector {
-  height: 40px !important;
-}
-
-.ant-select-selection-item {
-  display: flex;
-  align-items: center;
-} */
 
 .ant-table-cell ul {
   background-color: transparent !important;

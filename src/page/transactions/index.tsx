@@ -155,14 +155,14 @@ function Transactions(props: transactionProps) {
         <input
           value={searchValue}
           placeholder="Search by transaction hash"
-          className="h-10 w-[400px] rounded-l-[4px] border-[1px] border-[#ffffff66] bg-transparent p-2 text-[#ffffff] outline-none"
+          className="h-10 w-[400px] rounded-l-[8px] border-[1px] border-[#ffffff66] bg-transparent p-2 text-[#ffffff] outline-none"
           onChange={(e) => setSearchValue(e.target.value)}
           onClick={() =>
             void getTransactionsServices(selectedChain, searchValue)
           }
         />
         <div
-          className="flex h-10 w-11 items-center justify-center bg-[#1890FF] text-[#FFFFFF]"
+          className="flex h-10 w-11 items-center justify-center rounded-r-[8px] bg-[#1890FF] text-[#FFFFFF]"
           style={{ boxShadow: '0px 2px 0px rgba(0, 0, 0, 0.043)' }}
         >
           <SearchOutlined />

@@ -9,9 +9,11 @@
     "ethersproject",
     "EZEK",
     "Flownia",
+    "hazenberg",
     "immer",
     "intervalplural",
     "languagedetector",
+    "monokai",
     "opentype",
     "Phanta",
     "phantabear",
@@ -27,7 +29,8 @@
     "Theirsverse",
     "truetype",
     "uglifyjs",
-    "uuidv"
+    "uuidv",
+    "wimer"
   ],
   "prettier.configPath": ".prettierrc.js",
   "editor.codeActionsOnSave": {

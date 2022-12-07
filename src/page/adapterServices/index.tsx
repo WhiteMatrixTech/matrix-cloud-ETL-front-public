@@ -163,6 +163,7 @@ function AdapterServices(props: adapterServicesProps) {
             dataSource={adaptServicesData}
             loading={getAdaptServicesLoading}
             onChange={handleChange}
+            pagination={false}
           />
         </div>
       </Spin>

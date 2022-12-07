@@ -147,7 +147,7 @@ function EventHandlers(props: dataStoreProps) {
             columns={columns}
             dataSource={eventHandlerData}
             loading={getEventHandlersLoading}
-            // pagination={false}
+            pagination={false}
             onChange={handleChange}
           />
         </div>
