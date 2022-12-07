@@ -43,7 +43,7 @@ export function LeftMenu() {
             <Link
               to={item.key}
               className={cn(
-                'flex cursor-pointer items-center justify-start  rounded-[50px] px-8 py-4 text-[14px] font-[400] text-[#FFFFFF]',
+                'flex cursor-pointer items-center justify-start  rounded-[50px] px-8 py-4 text-[16px] font-[400] text-[#FFFFFF]',
                 selected === item.label && 'bg-[#474E6C] hover:text-[#ffffff]'
               )}
             >

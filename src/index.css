@@ -42,6 +42,7 @@
   border-bottom: 0 !important;
   color: #ffffff !important;
   font-weight: 400 !important;
+  font-size: 14px;
 }
 
 .ant-table-cell-ellipsis {
@@ -130,6 +131,10 @@
 .ant-select-item-option-selected {
   color: #ffffff !important;
   background-color: #262d4e !important;
+}
+
+td.ant-table-column-sort {
+  background: #474e6ac6 !important;
 }
 
 /* .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {

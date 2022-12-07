@@ -108,13 +108,13 @@ function Blocks(props: blockProps) {
 
   return (
     <div className={cn(className)}>
-      <div className="px-10 py-3 text-[24px] font-[600] capitalize text-[#2483FF]">
+      <div className="pb-4 text-[24px] font-[600] capitalize text-[#2483FF]">
         <Link to="/data-store?params=blockchain">Blockchain Explorer</Link>
         <span className="mx-4">{'>'}</span>
         <span className="text-[#ffffff]">blocks</span>
       </div>
 
-      <div className="flex px-10 py-3">
+      <div className="flex">
         <input
           value={searchValue}
           placeholder="Search by block number"
