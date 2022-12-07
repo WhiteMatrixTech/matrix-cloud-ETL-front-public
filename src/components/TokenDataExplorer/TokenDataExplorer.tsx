@@ -317,7 +317,7 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
       )}
 
       <Spin spinning={status === 'loading'} tip="downloading">
-        <div className={cn(className, 'pt-10 font-Roboto')}>
+        <div className={cn(className, 'pt-10')}>
           <Table
             rowKey={(record) => `${record.address}-${uuidv4()}`}
             columns={Columns}

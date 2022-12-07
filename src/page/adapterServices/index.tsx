@@ -156,7 +156,7 @@ function AdapterServices(props: adapterServicesProps) {
       </div>
 
       <Spin spinning={status === 'loading'} tip="downloading">
-        <div className={cn(className, 'pt-4 font-Roboto')}>
+        <div className={cn(className, 'pt-4')}>
           <Table
             rowKey={(record) => `${record.blockNumber} - ${uuidv4()}`}
             columns={columns}

@@ -1,5 +1,5 @@
 import { ArrowDownOutlined, SearchOutlined } from '@ant-design/icons';
-import { Select, Spin, Table } from 'antd';
+import { Select, Spin, Table, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import cn from 'classnames';
 import dayjs from 'dayjs';
@@ -14,6 +14,8 @@ import {
   getEventsData,
   getTransactionData
 } from '@/service/services';
+
+import styles from './BlockchainExplorer.module.less';
 
 interface BlockchainExplorerProps {
   className?: string;
@@ -204,7 +206,29 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
       title: 'Data',
       dataIndex: 'data',
       ellipsis: true,
-      className: 'text-[#000000d9] text-base'
+      className: 'text-[#000000d9] text-base',
+      render: (_, data) => {
+        if (!data.data) {
+          return <div>N/A</div>;
+        }
+        return (
+          <Tooltip
+            overlayStyle={{
+              maxWidth: '50%'
+            }}
+            overlayInnerStyle={{
+              padding: '16px',
+              background: '#313857',
+              borderRadius: '8px'
+            }}
+            placement="top"
+            arrowPointAtCenter={true}
+            title={data.data}
+          >
+            <div className={cn(styles.description)}>{data.data}</div>
+          </Tooltip>
+        );
+      }
     },
     {
       title: 'Topics',
@@ -218,7 +242,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
         return (
           <div>
             {data.topics.map((item, index) => (
-              <div key={index} className="m-[5px] text-[#000000d9]">
+              <div key={index} className="m-[5px] text-[#ffffff]">
                 {`${item}`}
                 {index >= data.topics.length - 1 ? '' : ','}
               </div>
@@ -291,7 +315,7 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
   ]);
 
   return (
-    <div className={cn(className, 'py-20')}>
+    <div className={cn(className, 'py-4')}>
       <div className="flex">
         <input
           value={searchValue}
@@ -331,11 +355,11 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
         />
       </div>
 
-      <div className="mt-14">
+      <div className="mt-10">
         <div className="text-[20px] text-[#ffffff]">Latest Blocks</div>
 
         <Spin spinning={status === 'loading'} tip="downloading">
-          <div className={cn(className, 'pt-10 font-Roboto')}>
+          <div className={cn(className, 'pt-4')}>
             <Table
               rowKey={(record) => `${record.blockNumber} - ${uuidv4()}`}
               columns={blockColumns}
@@ -356,11 +380,11 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
         </Spin>
       </div>
 
-      <div className="mt-14">
+      <div className="mt-10">
         <div className="text-[20px] text-[#ffffff]">Latest Transactions</div>
 
         <Spin spinning={status === 'loading'} tip="downloading">
-          <div className={cn(className, 'pt-10 font-Roboto')}>
+          <div className={cn(className, 'pt-4')}>
             <Table
               rowKey={(record) => `${record.blockNumber} - ${uuidv4()}`}
               columns={transactionColumns}
@@ -381,11 +405,11 @@ export function BlockchainExplorer(props: BlockchainExplorerProps) {
         </Spin>
       </div>
 
-      <div className="mt-14">
+      <div className="mt-10">
         <div className="text-[20px] text-[#ffffff]">Latest Events</div>
 
         <Spin spinning={status === 'loading'} tip="downloading">
-          <div className={cn(className, 'pt-10 font-Roboto')}>
+          <div className={cn(className, 'pt-4')}>
             <Table
               rowKey={(record) => `${record.address} - ${uuidv4()}`}
               columns={eventsColumns}

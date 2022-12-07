@@ -195,7 +195,7 @@ function Transactions(props: transactionProps) {
       </div>
 
       <Spin spinning={status === 'loading'} tip="downloading">
-        <div className={cn(className, 'pt-10 font-Roboto')}>
+        <div className={cn(className, 'pt-10')}>
           <Table
             rowKey={(record) => `${record.blockNumber} - ${uuidv4()}`}
             columns={Columns}

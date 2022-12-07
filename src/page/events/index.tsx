@@ -1,4 +1,4 @@
-import { Select, Spin } from 'antd';
+import { Select, Spin, Tooltip } from 'antd';
 import Table, { ColumnsType } from 'antd/lib/table';
 import cn from 'classnames';
 import React, { useEffect, useState } from 'react';
@@ -7,6 +7,8 @@ import { useAsyncFn } from 'react-use';
 import { v4 as uuidv4 } from 'uuid';
 
 import { getEventsData } from '@/service/services';
+
+import styles from './index.module.less';
 
 interface eventsProps {
   className?: string;
@@ -70,7 +72,23 @@ function Events(props: eventsProps) {
         if (!data.data) {
           return <div>N/A</div>;
         }
-        return <div>{data.data}</div>;
+        return (
+          <Tooltip
+            overlayStyle={{
+              maxWidth: '50%'
+            }}
+            overlayInnerStyle={{
+              padding: '16px',
+              background: '#313857',
+              borderRadius: '8px'
+            }}
+            placement="top"
+            arrowPointAtCenter={true}
+            title={data.data}
+          >
+            <div className={cn(styles.description)}>{data.data}</div>
+          </Tooltip>
+        );
       }
     },
     {
@@ -85,7 +103,7 @@ function Events(props: eventsProps) {
         return (
           <div>
             {data.topics.map((item, index) => (
-              <div key={index} className="m-[5px] text-[#000000d9]">
+              <div key={index} className="m-[5px] text-[#ffffff]">
                 {`${item}`}
                 {index >= data.topics.length - 1 ? '' : ','}
               </div>
@@ -145,7 +163,7 @@ function Events(props: eventsProps) {
       />
 
       <Spin spinning={status === 'loading'} tip="downloading">
-        <div className={cn(className, 'pt-10 font-Roboto')}>
+        <div className={cn(className, 'pt-10')}>
           <Table
             rowKey={(record) =>
               `${record.address} - ${record.blockNumber} - ${uuidv4()}`

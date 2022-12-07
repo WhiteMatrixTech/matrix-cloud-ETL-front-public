@@ -69,9 +69,11 @@ function Blocks(props: blockProps) {
       className: 'text-[#000000d9] text-base',
       render: (_, data) => {
         return (
-          <div className="text-[#2483FF] underline underline-offset-2">
+          <Link
+            to={`/data-store/transactions?blockchain=${selectedChain}?blockNumber=${data.blockNumber}`}
+          >
             {data.transactionCount}
-          </div>
+          </Link>
         );
       }
     }
@@ -155,7 +157,7 @@ function Blocks(props: blockProps) {
       </div>
 
       <Spin spinning={status === 'loading'} tip="downloading">
-        <div className={cn(className, 'pt-10 font-Roboto')}>
+        <div className={cn(className, 'pt-10')}>
           <Table
             rowKey={(record) => `${record.blockNumber}-${record.timestamp}`}
             columns={Columns}
