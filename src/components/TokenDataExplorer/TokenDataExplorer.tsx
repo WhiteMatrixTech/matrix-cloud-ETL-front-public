@@ -257,7 +257,7 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
         >
           <SearchOutlined />
         </div>
-        <div className="ml-10 text-[20px] text-[#2483FF]">Blockchain</div>
+        <div className="ml-10 text-[20px] text-[#ffffff]">Blockchain</div>
         <Select
           defaultValue="ethereum"
           style={{ width: '210px', marginLeft: '30px' }}
