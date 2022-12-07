@@ -115,6 +115,33 @@
   background-color: transparent !important;
 }
 
+.ant-select-dropdown {
+  background-color: #303961 !important;
+  border-radius: 8px !important;
+  color: #ffffff !important;
+}
+
+.ant-select-item {
+  background-color: #303961 !important;
+  /* border-radius: 8px !important; */
+  color: #ffffff !important;
+}
+
+.ant-select-item-option-selected {
+  color: #ffffff !important;
+  background-color: #262d4e !important;
+}
+
+/* .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  color: #ffffff !important;
+  background-color: #303961 !important;
+}
+
+.ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+  background-color: #262d4e !important;
+  color: #ffffff !important;
+} */
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;

@@ -247,28 +247,31 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
   }, [ethTokenData, flowTokenData, selectedChain]);
 
   return (
-    <div className={cn(className, 'py-4')}>
-      <div className="flex items-center">
-        <Select
-          value={selectedSearch}
-          defaultValue="contractAddress"
-          style={{ width: '159px' }}
-          options={[
-            {
-              value: 'Contract Address',
-              label: 'Contract Address'
-            },
-            {
-              value: 'Owner',
-              label: 'Owner'
-            }
-          ]}
-          onChange={(value: string) => setSelectedSearch(value)}
-        />
+    <div className={cn(styles.TokenDataExplorer, className, 'py-4')}>
+      <div className={cn('flex items-center')}>
+        <div className={cn(styles.select)}>
+          <Select
+            value={selectedSearch}
+            defaultValue="contractAddress"
+            style={{ width: '159px' }}
+            options={[
+              {
+                value: 'Contract Address',
+                label: 'Contract Address'
+              },
+              {
+                value: 'Owner',
+                label: 'Owner'
+              }
+            ]}
+            open={true}
+            onChange={(value: string) => setSelectedSearch(value)}
+          />
+        </div>
         <input
           value={searchValue}
           placeholder={`Search by ${selectedSearch}`}
-          className="h-10 w-[400px] rounded-l-[8px] border-[1px] border-[#ffffff66] bg-transparent p-2 text-[#ffffff] outline-none"
+          className="h-10 w-[400px] border-[1px] border-l-[0px] border-[#ffffff66] bg-transparent p-2 text-[#ffffff] outline-none"
           onChange={(e) => setSearchValue(e.target.value)}
         />
         <div
