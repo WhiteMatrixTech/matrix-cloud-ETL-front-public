@@ -264,7 +264,6 @@ export function TokenDataExplorer(props: TokenDataExplorerProps) {
                 label: 'Owner'
               }
             ]}
-            open={true}
             onChange={(value: string) => setSelectedSearch(value)}
           />
         </div>
