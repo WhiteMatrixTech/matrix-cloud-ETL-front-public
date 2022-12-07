@@ -72,10 +72,7 @@ function AdapterServices(props: adapterServicesProps) {
       className: 'text-[#000000d9] font-[400] text-base w-[30%]',
       render: (_, data) => {
         return (
-          <Link
-            className="text-[#59A8D4] underline underline-offset-4 hover:underline "
-            to={`/adapter-services/taskDetail?taskName=${data.taskName}`}
-          >
+          <Link to={`/adapter-services/taskDetail?taskName=${data.taskName}`}>
             {data.taskName}
           </Link>
         );
@@ -117,7 +114,7 @@ function AdapterServices(props: adapterServicesProps) {
         return (
           <div
             className={cn(
-              'flex items-center text-[18px] font-[600] uppercase',
+              'flex items-center text-[14px] font-[600] capitalize',
               data.status === 'paused' ? 'text-[#FF7800]' : 'text-[#4AA785]'
             )}
           >

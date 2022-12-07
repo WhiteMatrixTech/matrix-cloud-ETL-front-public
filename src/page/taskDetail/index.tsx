@@ -69,10 +69,16 @@ function TaskDetail(props: taskDetailProps) {
         return (
           <div
             className={cn(
-              'text-[18px] font-[700] uppercase',
+              'flex items-center text-[14px] font-[600] capitalize',
               data.status === 'paused' ? 'text-[#FF7800]' : 'text-[#499F5F]'
             )}
           >
+            <div
+              className={cn(
+                'mr-2 h-[6px] w-[6px] rounded-[50%]',
+                data.status === 'paused' ? 'bg-[#FF7800]' : 'bg-[#499F5F]'
+              )}
+            />
             {data.status}
           </div>
         );
@@ -107,7 +113,7 @@ function TaskDetail(props: taskDetailProps) {
 
   return (
     <div className={cn(styles.taskDetail, className)}>
-      <div className="px-10 py-3 text-[24px] font-[600] capitalize text-[#2483FF]">
+      <div className="text-[24px] font-[600] capitalize text-[#2483FF]">
         <Link to="/adapter-services">Data Adapter Jobs</Link>
         <span className="mx-4">{'>'}</span>
         <span className="text-[#ffffff]">Task Detail</span>
