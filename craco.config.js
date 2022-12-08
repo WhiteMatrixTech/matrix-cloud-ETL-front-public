@@ -33,6 +33,15 @@ module.exports = {
       }
     }
   ],
+  devServer: {
+    proxy: {
+      '/etl': {
+        target: 'http://localhost:8082/etl',
+        changeOrigin: true,
+        pathRewrite: { '^/etl': '' }
+      }
+    }
+  },
   webpack: {
     plugins: [
       new NodePolyfillPlugin({

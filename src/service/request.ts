@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestHeaders } from 'axios';
 
-const serviceBasePath = 'https://alpha.etl.api.matrixlabs.org/';
+const serviceBasePath = '';
 
 const axiosInstance = axios.create({
   baseURL: serviceBasePath
