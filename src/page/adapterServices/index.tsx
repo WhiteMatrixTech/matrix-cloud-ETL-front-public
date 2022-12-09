@@ -46,7 +46,7 @@ function AdapterServices(props: adapterServicesProps) {
         { text: 'Flow', value: 'flow' },
         { text: 'Ethereum', value: 'ethereum' },
         { text: 'Polygon', value: 'polygon' },
-        { text: 'BSC', value: 'bsc' }
+        { text: 'BNB Chain', value: 'bsc' }
       ],
       filteredValue: filteredInfo.blockchain || null,
       onFilter: (value, record) => {

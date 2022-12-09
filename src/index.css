@@ -117,24 +117,80 @@
 }
 
 .ant-select-dropdown {
-  background-color: #303961 !important;
+  background-color: #42496f !important;
   border-radius: 8px !important;
   color: #ffffff !important;
 }
 
 .ant-select-item {
-  background-color: #303961 !important;
+  background-color: #42496f !important;
   /* border-radius: 8px !important; */
   color: #ffffff !important;
 }
 
 .ant-select-item-option-selected {
   color: #ffffff !important;
-  background-color: #262d4e !important;
+  background-color: #303961 !important;
 }
 
 td.ant-table-column-sort {
   background: #474e6ac6 !important;
+}
+
+.ant-table-filter-dropdown {
+  background-color: #42496f !important;
+}
+
+.ant-dropdown-menu {
+  background-color: #42496f !important;
+}
+
+.ant-dropdown-menu-item,
+.ant-dropdown-menu-submenu-title {
+  color: #ffffffe5 !important;
+  font-size: 12px !important;
+}
+
+.ant-table-filter-dropdown-btns {
+  border-top: 0 !important;
+  background-color: #ffffff0d !important;
+}
+
+.ant-btn-link[disabled],
+.ant-btn-link[disabled]:hover,
+.ant-btn-link[disabled]:focus,
+.ant-btn-link[disabled]:active {
+  color: #ffffff !important;
+}
+
+.ant-btn-primary {
+  background: #262d4e !important;
+  border-radius: 8px !important;
+  border-color: transparent !important;
+}
+
+.ant-btn-sm {
+  height: 32px !important;
+  padding: 4px 11px !important;
+}
+
+.ant-dropdown-menu-item:hover,
+.ant-dropdown-menu-submenu-title:hover,
+.ant-dropdown-menu-item.ant-dropdown-menu-item-active,
+.ant-dropdown-menu-item.ant-dropdown-menu-submenu-title-active,
+.ant-dropdown-menu-submenu-title.ant-dropdown-menu-item-active,
+.ant-dropdown-menu-submenu-title.ant-dropdown-menu-submenu-title-active {
+  background-color: transparent !important;
+}
+
+.ant-dropdown-menu-item-selected,
+.ant-dropdown-menu-submenu-title-selected {
+  background-color: transparent !important;
+}
+
+.ant-checkbox-inner {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border: 0px !important;
 }
 
 /* .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {

@@ -79,7 +79,7 @@ function TaskDetail(props: taskDetailProps) {
                 data.status === 'paused' ? 'bg-[#FF7800]' : 'bg-[#499F5F]'
               )}
             />
-            {data.status}
+            {data.status.toLocaleLowerCase()}
           </div>
         );
       }
